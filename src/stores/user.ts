@@ -10,7 +10,8 @@ const DEFAULT_SETTINGS: GameSettings = {
   initialTime: 90,
   bonusTime: 30,
   roundsPerLevel: 10,
-  theme: 'system'
+  theme: 'system',
+  accentColor: 'teal'
 }
 
 function generateUUID(): string {

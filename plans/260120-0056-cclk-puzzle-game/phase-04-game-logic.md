@@ -1,10 +1,11 @@
 # Phase 4: Game Logic
 
 ```yaml
-status: pending
+status: done
 priority: high
 estimated_files: 5
 depends_on: phase-03
+completed: 2026-01-20
 ```
 
 ## Overview

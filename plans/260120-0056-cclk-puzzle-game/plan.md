@@ -1,7 +1,7 @@
 # CCLK Puzzle Game - Implementation Plan
 
 ```yaml
-status: in_progress
+status: complete
 created: 2026-01-20
 stack: Vue 3 + TypeScript + Tailwind CSS v4 + Pinia
 deployment: GitHub Pages
@@ -16,10 +16,10 @@ Puzzle game học Châm Cứu Lục Khí với cơ chế lật bài đoán theo 
 | Phase | Name | Status | Files |
 |-------|------|--------|-------|
 | 1 | Foundation Setup | ✅ done | [phase-01-foundation-setup.md](./phase-01-foundation-setup.md) |
-| 2 | Knowledge Base | pending | [phase-02-knowledge-base.md](./phase-02-knowledge-base.md) |
-| 3 | Core Components | pending | [phase-03-core-components.md](./phase-03-core-components.md) |
-| 4 | Game Logic | pending | [phase-04-game-logic.md](./phase-04-game-logic.md) |
-| 5 | UI Polish & Deploy | pending | [phase-05-ui-polish-and-deploy.md](./phase-05-ui-polish-and-deploy.md) |
+| 2 | Knowledge Base | ✅ done | [phase-02-knowledge-base.md](./phase-02-knowledge-base.md) |
+| 3 | Core Components | ✅ done | [phase-03-core-components.md](./phase-03-core-components.md) |
+| 4 | Game Logic | ✅ done | [phase-04-game-logic.md](./phase-04-game-logic.md) |
+| 5 | UI Polish & Deploy | ✅ done | [phase-05-ui-polish-and-deploy.md](./phase-05-ui-polish-and-deploy.md) |
 
 ## Key Dependencies
 

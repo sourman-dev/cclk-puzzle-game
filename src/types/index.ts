@@ -50,6 +50,9 @@ export interface LevelProgress {
   correctAnswers: number
 }
 
+// Accent color options
+export type AccentColor = 'blue' | 'teal' | 'emerald' | 'violet' | 'amber' | 'rose'
+
 // Game settings
 export interface GameSettings {
   revealedCards: 1 | 2 | 3
@@ -58,6 +61,7 @@ export interface GameSettings {
   bonusTime: number         // seconds added on correct
   roundsPerLevel: number
   theme: 'dark' | 'light' | 'system'
+  accentColor: AccentColor
 }
 
 // User data
