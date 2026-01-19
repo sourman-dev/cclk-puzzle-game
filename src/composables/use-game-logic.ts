@@ -64,14 +64,20 @@ export function useGameLogic() {
       rule
     )
 
-    // Create cards array
+    // Create cards array with shuffled positions
+    // First, create mapping: display position -> actual sequence index
+    const displayOrder = shuffle([0, 1, 2, 3, 4, 5]) // random order of sequence indices
+
     const cards: Card[] = []
-    for (let i = 1; i <= 6; i++) {
+    for (let displayPos = 1; displayPos <= 6; displayPos++) {
+      const sequenceIndex = displayOrder[displayPos - 1] as number
+      const actualPosition = sequenceIndex + 1 // 1-based position in sequence
+
       cards.push({
-        position: i,
-        value: sequence[i - 1] as string,
-        isRevealed: revealedPositions.includes(i),
-        isTarget: i === targetPosition
+        position: displayPos,
+        value: sequence[sequenceIndex] as string,
+        isRevealed: revealedPositions.includes(actualPosition),
+        isTarget: actualPosition === targetPosition
       })
     }
 
