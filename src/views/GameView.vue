@@ -141,7 +141,7 @@ function handlePlayAgain() {
 <template>
   <div class="min-h-screen flex flex-col bg-primary">
     <!-- Header -->
-    <header class="flex items-center justify-between px-4 py-3 border-b border-color">
+    <header class="flex items-center justify-between px-4 py-3 pt-safe border-b border-color">
       <button @click="handleExit" class="text-xl">←</button>
       <span class="font-semibold">{{ level?.title }}</span>
       <span class="w-8"></span>

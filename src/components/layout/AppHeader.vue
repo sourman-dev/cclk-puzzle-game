@@ -30,7 +30,7 @@ function toggleTheme() {
 </script>
 
 <template>
-  <header class="flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+  <header class="flex items-center justify-between px-4 py-3 pt-safe bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
     <button
       @click="emit('goHome')"
       class="flex items-center gap-2"
@@ -38,7 +38,7 @@ function toggleTheme() {
       <img src="/android-chrome-192x192.png" alt="CCLK" class="w-8 h-8 rounded-lg" />
       <div class="flex flex-col items-start">
         <span :class="['text-xl font-bold leading-tight', accentTextClass]">CCLK</span>
-        <span class="text-[10px] text-gray-400 leading-tight">v0.0.3</span>
+        <span class="text-[10px] text-gray-400 leading-tight">v0.0.4</span>
       </div>
     </button>
 
