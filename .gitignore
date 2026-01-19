@@ -28,3 +28,6 @@ dist-ssr
 .opencode/
 CLAUDE.md
 AGENTS.md
+
+# Private files
+cclk.pdf
