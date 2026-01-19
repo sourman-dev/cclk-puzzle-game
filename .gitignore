@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Claude Code / AI tools
+.claude/
+.opencode/
+CLAUDE.md
+AGENTS.md
