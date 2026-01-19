@@ -144,18 +144,19 @@ function handlePlayAgain() {
     <header class="flex items-center justify-between px-4 py-3 border-b border-color">
       <button @click="handleExit" class="text-xl">←</button>
       <span class="font-semibold">{{ level?.title }}</span>
-      <span class="text-sm">{{ roundNumber }}/{{ settings.roundsPerLevel }}</span>
+      <span class="w-8"></span>
     </header>
 
     <main v-if="currentQuestion" class="flex-1 flex flex-col px-4 py-2 gap-2">
-      <!-- Timer & Points -->
+      <!-- Timer & Points & Progress -->
       <div class="flex items-center justify-between">
         <GameTimer
           :time-remaining="timer.timeRemaining.value"
           :max-time="settings.initialTime"
         />
-        <div class="text-xl font-bold text-primary">
-          {{ totalPoints.toFixed(1) }}đ
+        <div class="flex items-center gap-3">
+          <span class="text-sm text-gray-500">{{ roundNumber }}/{{ settings.roundsPerLevel }}</span>
+          <span class="text-xl font-bold text-primary">{{ totalPoints.toFixed(1) }}đ</span>
         </div>
       </div>
 
