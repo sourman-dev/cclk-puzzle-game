@@ -64,20 +64,31 @@ export function useGameLogic() {
       rule
     )
 
-    // Create cards array with shuffled positions
-    // First, create mapping: display position -> actual sequence index
-    const displayOrder = shuffle([0, 1, 2, 3, 4, 5]) // random order of sequence indices
+    // Create cards array with rotated sequence
+    // Rotate the sequence to start from a random position (but keep order)
+    const rotateOffset = randomInt(0, 5)
+    const rotatedSequence: string[] = []
+    for (let i = 0; i < 6; i++) {
+      rotatedSequence.push(sequence[(i + rotateOffset) % 6] as string)
+    }
+
+    // Find where the target value ends up after rotation
+    const targetValue = sequence[targetPosition - 1] as string
+    const rotatedTargetPosition = rotatedSequence.indexOf(targetValue) + 1
+
+    // Find revealed values and their new positions
+    const rotatedRevealedPositions = revealedPositions.map(pos => {
+      const value = sequence[pos - 1] as string
+      return rotatedSequence.indexOf(value) + 1
+    })
 
     const cards: Card[] = []
-    for (let displayPos = 1; displayPos <= 6; displayPos++) {
-      const sequenceIndex = displayOrder[displayPos - 1] as number
-      const actualPosition = sequenceIndex + 1 // 1-based position in sequence
-
+    for (let i = 1; i <= 6; i++) {
       cards.push({
-        position: displayPos,
-        value: sequence[sequenceIndex] as string,
-        isRevealed: revealedPositions.includes(actualPosition),
-        isTarget: actualPosition === targetPosition
+        position: i,
+        value: rotatedSequence[i - 1] as string,
+        isRevealed: rotatedRevealedPositions.includes(i),
+        isTarget: i === rotatedTargetPosition
       })
     }
 
