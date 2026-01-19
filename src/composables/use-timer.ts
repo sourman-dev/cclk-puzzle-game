@@ -2,6 +2,7 @@ import { ref, computed, onUnmounted } from 'vue'
 
 export function useTimer(initialTime: number = 90) {
   const timeRemaining = ref(initialTime)
+  const maxTime = ref(initialTime)
   const isRunning = ref(false)
   const isPaused = ref(false)
 
@@ -16,6 +17,7 @@ export function useTimer(initialTime: number = 90) {
   function start(time?: number) {
     if (time !== undefined) {
       timeRemaining.value = time
+      maxTime.value = time
     }
     isRunning.value = true
     isPaused.value = false
@@ -59,7 +61,7 @@ export function useTimer(initialTime: number = 90) {
   }
 
   function addTime(seconds: number) {
-    timeRemaining.value += seconds
+    timeRemaining.value = Math.min(timeRemaining.value + seconds, maxTime.value)
   }
 
   function reset(time: number = initialTime) {

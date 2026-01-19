@@ -147,7 +147,7 @@ function handlePlayAgain() {
       <span class="text-sm">{{ roundNumber }}/{{ settings.roundsPerLevel }}</span>
     </header>
 
-    <main v-if="currentQuestion" class="flex-1 flex flex-col px-4 py-4 gap-4">
+    <main v-if="currentQuestion" class="flex-1 flex flex-col px-4 py-2 gap-2">
       <!-- Timer & Points -->
       <div class="flex items-center justify-between">
         <GameTimer
@@ -165,7 +165,7 @@ function handlePlayAgain() {
       </div>
 
       <!-- Cards -->
-      <div class="flex-1 flex items-center">
+      <div class="flex-1 flex items-center min-h-0">
         <CardGrid :cards="currentQuestion.cards" />
       </div>
 
@@ -179,7 +179,7 @@ function handlePlayAgain() {
       />
 
       <!-- Hint Button -->
-      <div class="flex justify-center">
+      <div class="flex justify-center pb-2">
         <HintButton
           :hints-used="hintsUsed"
           :disabled="showResult"
