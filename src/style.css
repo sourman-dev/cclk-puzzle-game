@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* CSS Variables for theming */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f3f4f6;
+  --color-text: #111827;
+  --color-text-secondary: #6b7280;
+  --color-border: #e5e7eb;
+  --color-primary: #3b82f6;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* Card colors by element */
+  --color-tho: #a3a042;    /* Thổ - Earth/Yellow-brown */
+  --color-kim: #c0c0c0;    /* Kim - Metal/Silver */
+  --color-thuy: #3b82f6;   /* Thủy - Water/Blue */
+  --color-thu: #22c55e;    /* Thử - Wood variant/Green */
+  --color-moc: #16a34a;    /* Mộc - Wood/Green */
+  --color-hoa: #ef4444;    /* Hỏa - Fire/Red */
+}
+
+.dark {
+  --color-bg: #111827;
+  --color-bg-secondary: #1f2937;
+  --color-text: #f9fafb;
+  --color-text-secondary: #9ca3af;
+  --color-border: #374151;
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100dvh;
+  margin: 0;
+}
+
+/* Utility classes */
+.bg-primary { background-color: var(--color-bg); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+.text-primary { color: var(--color-text); }
+.text-secondary { color: var(--color-text-secondary); }
+.border-color { border-color: var(--color-border); }
