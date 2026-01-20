@@ -4,6 +4,7 @@ import GameCard from './GameCard.vue'
 
 interface Props {
   cards: Card[]
+  correctAnswer?: string
 }
 
 defineProps<Props>()
@@ -15,6 +16,7 @@ defineProps<Props>()
       v-for="card in cards"
       :key="card.position"
       :card="card"
+      :correct-answer="correctAnswer"
     />
   </div>
 </template>

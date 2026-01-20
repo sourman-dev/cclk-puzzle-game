@@ -7,6 +7,7 @@ import { getColorByValue } from '@/data/knowledge/luc-hanh'
 interface Props {
   card: Card
   showHint?: boolean
+  correctAnswer?: string
 }
 
 const props = defineProps<Props>()
@@ -26,8 +27,9 @@ const elementColorStyle = computed(() => {
 const hiddenColorHintStyle = computed(() => {
   if (!colorHintEnabled.value) return null
   if (props.card.isTarget) {
-    // Target card shows element color as hint
-    const { bg, text } = getColorByValue(props.card.value)
+    // Target card shows CORRECT ANSWER color as hint (not card.value for phan_sinh)
+    const hintValue = props.correctAnswer || props.card.value
+    const { bg, text } = getColorByValue(hintValue)
     return { backgroundColor: bg, color: text, borderColor: '#facc15' } // yellow border for target
   }
   // Hidden cards: white bg, black border, black text
@@ -60,8 +62,8 @@ const revealedBgClass = computed(() => {
       :class="[
         'absolute inset-0 flex items-center justify-center rounded-xl backface-hidden',
         !colorHintEnabled && 'bg-gradient-to-br from-gray-400 to-gray-600 dark:from-gray-600 dark:to-gray-800 text-white',
-        'border',
-        !colorHintEnabled && (card.isTarget ? 'border-yellow-400 ring-2 ring-yellow-400 border-2' : 'border-gray-500 dark:border-gray-500 border-2'),
+        'border-2',
+        !colorHintEnabled && (card.isTarget ? 'border-yellow-400 ring-2 ring-yellow-400' : 'border-gray-500 dark:border-gray-500'),
         colorHintEnabled && card.isTarget && 'ring-2 ring-yellow-400'
       ]"
       :style="hiddenColorHintStyle"

@@ -171,7 +171,7 @@ function handlePlayAgain() {
 
       <!-- Cards -->
       <div class="flex-1 flex items-center min-h-0">
-        <CardGrid :cards="currentQuestion.cards" />
+        <CardGrid :cards="currentQuestion.cards" :correct-answer="currentQuestion.correctAnswer" />
       </div>
 
       <!-- Answer Buttons -->

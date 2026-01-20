@@ -18,7 +18,7 @@ export const LUC_HANH: LucHanhElement[] = [
     thuTuTuongSinh: 1,
     thuTuPhanSinh: 6,
     ten: 'Thổ',
-    mauSac: '#ffbe00',
+    mauSac: '#ac8308ff',
     mauChu: '#000000',
     khi: 'Thấp',
     kinh: 'Thái Âm'
@@ -68,7 +68,7 @@ export const LUC_HANH: LucHanhElement[] = [
     thuTuTuongSinh: 6,
     thuTuPhanSinh: 1,
     ten: 'Hỏa',
-    mauSac: '#2596be',
+    mauSac: '#ff0000',
     mauChu: '#ffffff',
     khi: 'Hỏa',  // same encoding as ten
     kinh: 'Thiếu Dương'
