@@ -29,16 +29,14 @@ const TOPIC_OPTIONS: { value: TopicType; label: string }[] = [
       <HexagramDiagram :selected-topic="selectedTopic" />
 
       <!-- Topic Selector -->
-      <select
-        v-model="selectedTopic"
-        class="mt-4 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-primary"
-      >
+      <select v-model="selectedTopic"
+        class="mt-4 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-primary">
         <option v-for="opt in TOPIC_OPTIONS" :key="opt.value" :value="opt.value">
           {{ opt.label }}
         </option>
       </select>
 
-      <p class="mt-4 text-sm text-secondary text-center max-w-xs">
+      <p class="mt-4 text-xs text-secondary text-center max-w-xs">
         Chọn chủ đề để xem thông tin tương ứng của mỗi Hành
       </p>
     </main>
