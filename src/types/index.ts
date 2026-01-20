@@ -3,7 +3,7 @@ export type RuleType = 'tuong_sinh' | 'phan_sinh' | 'tuong_khac'
 
 // Topic types (knowledge categories)
 export type TopicType =
-  | 'ngu_hanh'        // Thổ, Kim, Thủy, Thử, Mộc, Hỏa
+  | 'luc_hanh'        // Thổ, Kim, Thủy, Thử, Mộc, Hỏa
   | 'luc_khi_tinh'    // Thấp, Táo, Hàn, Thử, Phong, Hoả
   | 'luc_kinh_base'   // Thái Âm, Dương Minh, Thái Dương, Thiếu Âm, Quyết Âm, Thiếu Dương
   | 'luc_tang'        // 6 Tạng

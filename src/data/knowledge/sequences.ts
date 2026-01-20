@@ -1,5 +1,5 @@
 // Base sequence theo chiều Tương Sinh Lục Khí
-export const NGU_HANH_SEQUENCE = ['Thổ', 'Kim', 'Thủy', 'Thử', 'Mộc', 'Hỏa'] as const
+export const LUC_HANH_SEQUENCE = ['Thổ', 'Kim', 'Thủy', 'Thử', 'Mộc', 'Hỏa'] as const
 
 // Lục Khí tính chất (Thấp/Mát, Táo/Khô, Hàn/Lạnh, Thử/Ấm, Phong/Gió, Hoả/Nóng)
 // Theo thứ tự tương sinh: Thổ->Kim->Thuỷ->Thử->Mộc->Hoả
@@ -10,7 +10,7 @@ export const LUC_KHI_TINH_SEQUENCE = ['Thấp', 'Táo', 'Hàn', 'Thử', 'Phong'
 export const LUC_KINH_BASE_SEQUENCE = ['Thái Âm', 'Dương Minh', 'Thái Dương', 'Thiếu Âm', 'Quyết Âm', 'Thiếu Dương'] as const
 
 // Mapping vị trí (1-6) theo Tương Sinh
-export type NguHanhElement = typeof NGU_HANH_SEQUENCE[number]
+export type LucHanhElement = typeof LUC_HANH_SEQUENCE[number]
 
 // Rule labels in Vietnamese
 export const RULE_LABELS = {
@@ -20,7 +20,7 @@ export const RULE_LABELS = {
 } as const
 
 // Các cặp tương khắc (đối nhau trong vòng tròn)
-export const TUONG_KHAC_PAIRS: [NguHanhElement, NguHanhElement][] = [
+export const TUONG_KHAC_PAIRS: [LucHanhElement, LucHanhElement][] = [
   ['Thủy', 'Hỏa'],
   ['Thổ', 'Thử'],
   ['Kim', 'Mộc']

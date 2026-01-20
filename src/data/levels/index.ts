@@ -6,7 +6,7 @@ export const LEVELS: Level[] = [
     order: 1,
     title: 'Lục Khí Cơ Bản',
     description: 'Học quy luật Tương Sinh của Lục Khí: Thổ → Kim → Thủy → Thử → Mộc → Hỏa',
-    topics: ['ngu_hanh'],
+    topics: ['luc_hanh'],
     rules: ['tuong_sinh'],
     unlocked: true
   },
