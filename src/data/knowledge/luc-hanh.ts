@@ -80,7 +80,17 @@ export function getByTuongSinhPosition(position: number): LucHanhElement | undef
   return LUC_HANH.find(e => e.thuTuTuongSinh === position)
 }
 
-// Get color by position (1-6)
+// Get color by any field value (ten, khi, kinh)
+export function getColorByValue(value: string): { bg: string; text: string } {
+  const element = LUC_HANH.find(e =>
+    e.ten === value || e.khi === value || e.kinh === value
+  )
+  return element
+    ? { bg: element.mauSac, text: element.mauChu }
+    : { bg: '#6b7280', text: '#ffffff' }
+}
+
+// Get color by position (1-6) - kept for backward compatibility
 export function getColorByPosition(position: number): { bg: string; text: string } {
   const element = getByTuongSinhPosition(position)
   return element

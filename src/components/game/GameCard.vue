@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import type { Card } from '@/types'
 import { useUserStore } from '@/stores/user'
-import { getColorByPosition } from '@/data/knowledge/element-colors'
+import { getColorByValue } from '@/data/knowledge/luc-hanh'
 
 interface Props {
   card: Card
@@ -15,10 +15,10 @@ const userStore = useUserStore()
 const accentColor = computed(() => userStore.settings.accentColor || 'teal')
 const colorHintEnabled = computed(() => userStore.settings.colorHintEnabled ?? false)
 
-// Element-based color by position (inline style) for revealed cards
+// Element-based color by value (inline style) for revealed cards
 const elementColorStyle = computed(() => {
-  if (!colorHintEnabled.value) return null
-  const { bg, text } = getColorByPosition(props.card.position)
+  if (!colorHintEnabled.value || !props.card.value) return null
+  const { bg, text } = getColorByValue(props.card.value)
   return { backgroundColor: bg, color: text, borderColor: bg }
 })
 
