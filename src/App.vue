@@ -2,9 +2,10 @@
 import { ref } from 'vue'
 import HomeView from '@/views/HomeView.vue'
 import GameView from '@/views/GameView.vue'
+import LearningView from '@/views/LearningView.vue'
 import type { RuleType } from '@/types'
 
-type Screen = 'home' | 'game'
+type Screen = 'home' | 'game' | 'learning'
 
 const currentScreen = ref<Screen>('home')
 const currentLevelId = ref<string>('')
@@ -21,12 +22,21 @@ function startLevel(levelId: string, rules: RuleType[], rounds: number) {
 function exitGame() {
   currentScreen.value = 'home'
 }
+
+function openLearning() {
+  currentScreen.value = 'learning'
+}
+
+function exitLearning() {
+  currentScreen.value = 'home'
+}
 </script>
 
 <template>
   <HomeView
     v-if="currentScreen === 'home'"
     @start-level="startLevel"
+    @open-learning="openLearning"
   />
 
   <GameView
@@ -35,5 +45,10 @@ function exitGame() {
     :rules="currentRules"
     :rounds="currentRounds"
     @exit="exitGame"
+  />
+
+  <LearningView
+    v-else-if="currentScreen === 'learning'"
+    @exit="exitLearning"
   />
 </template>

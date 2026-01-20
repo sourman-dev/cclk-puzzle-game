@@ -18,6 +18,7 @@ const selectedLevel = computed<Level | null>(() =>
 
 const emit = defineEmits<{
   startLevel: [levelId: string, rules: RuleType[], rounds: number]
+  openLearning: []
 }>()
 
 function handleSelectLevel(levelId: string) {
@@ -42,9 +43,16 @@ function handleStartLevel(rules: RuleType[], rounds: number) {
 
     <main class="flex-1 flex flex-col items-center px-4 py-6">
       <h1 class="text-2xl font-bold mb-2">Châm Cứu Lục Khí</h1>
-      <p class="text-secondary text-sm mb-6 text-center">
+      <p class="text-secondary text-sm mb-4 text-center">
         Học quy luật Tương Sinh - Phản Sinh - Tương Khắc
       </p>
+
+      <button
+        @click="emit('openLearning')"
+        class="mb-6 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg flex items-center gap-2"
+      >
+        📖 Học tập Lục Khí
+      </button>
 
       <LevelSelector @select-level="handleSelectLevel" />
     </main>
