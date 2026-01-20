@@ -38,7 +38,7 @@ function toggleTheme() {
       <img src="/android-chrome-192x192.png" alt="CCLK" class="w-8 h-8 rounded-lg" />
       <div class="flex flex-col items-start">
         <span :class="['text-xl font-bold leading-tight', accentTextClass]">CCLK</span>
-        <span class="text-[10px] text-gray-400 leading-tight">v0.0.7</span>
+        <span class="text-[10px] text-gray-400 leading-tight">v0.0.8</span>
       </div>
     </button>
 
