@@ -70,7 +70,7 @@ export const LUC_HANH: LucHanhElement[] = [
     ten: 'Hỏa',
     mauSac: '#2596be',
     mauChu: '#ffffff',
-    khi: 'Hoả',
+    khi: 'Hỏa',  // same encoding as ten
     kinh: 'Thiếu Dương'
   }
 ]

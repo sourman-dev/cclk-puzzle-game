@@ -15,17 +15,27 @@ const userStore = useUserStore()
 const accentColor = computed(() => userStore.settings.accentColor || 'teal')
 const colorHintEnabled = computed(() => userStore.settings.colorHintEnabled ?? false)
 
-// Element-based color by value (inline style) for revealed cards
+// Element-based color by value (inline style)
 const elementColorStyle = computed(() => {
   if (!colorHintEnabled.value || !props.card.value) return null
   const { bg, text } = getColorByValue(props.card.value)
   return { backgroundColor: bg, color: text, borderColor: bg }
 })
 
-const revealedBgClass = computed(() => {
-  // If color hint enabled, only use border class (background from inline style)
-  if (colorHintEnabled.value) return ''
+// Style for hidden cards when color hint enabled (white bg, black border)
+const hiddenColorHintStyle = computed(() => {
+  if (!colorHintEnabled.value) return null
+  if (props.card.isTarget) {
+    // Target card shows element color as hint
+    const { bg, text } = getColorByValue(props.card.value)
+    return { backgroundColor: bg, color: text, borderColor: '#facc15' } // yellow border for target
+  }
+  // Hidden cards: white bg, black border, black text
+  return { backgroundColor: '#ffffff', color: '#000000', borderColor: '#000000' }
+})
 
+const revealedBgClass = computed(() => {
+  if (colorHintEnabled.value) return ''
   const colorMap: Record<string, string> = {
     blue: 'bg-gradient-to-br from-blue-500 to-blue-700 border-blue-400',
     teal: 'bg-gradient-to-br from-teal-500 to-teal-700 border-teal-400',
@@ -45,20 +55,22 @@ const revealedBgClass = computed(() => {
       card.isRevealed && 'rotate-y-180'
     ]"
   >
-    <!-- Front (hidden/úp) - màu xám -->
+    <!-- Front (hidden/úp) -->
     <div
       :class="[
         'absolute inset-0 flex items-center justify-center rounded-xl backface-hidden',
-        'bg-gradient-to-br from-gray-400 to-gray-600 dark:from-gray-600 dark:to-gray-800 text-white',
-        'border-2',
-        card.isTarget ? 'border-yellow-400 ring-2 ring-yellow-400' : 'border-gray-500 dark:border-gray-500'
+        !colorHintEnabled && 'bg-gradient-to-br from-gray-400 to-gray-600 dark:from-gray-600 dark:to-gray-800 text-white',
+        'border',
+        !colorHintEnabled && (card.isTarget ? 'border-yellow-400 ring-2 ring-yellow-400 border-2' : 'border-gray-500 dark:border-gray-500 border-2'),
+        colorHintEnabled && card.isTarget && 'ring-2 ring-yellow-400'
       ]"
+      :style="hiddenColorHintStyle"
     >
       <span class="text-2xl font-bold">{{ card.position }}</span>
       <span v-if="card.isTarget" class="absolute top-1 right-1 text-xl">❓</span>
     </div>
 
-    <!-- Back (revealed/mở) - màu accent hoặc element -->
+    <!-- Back (revealed/mở) -->
     <div
       :class="[
         'absolute inset-0 flex flex-col items-center justify-center rounded-xl backface-hidden rotate-y-180',
