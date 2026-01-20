@@ -13,18 +13,18 @@ const props = defineProps<Props>()
 
 const userStore = useUserStore()
 const accentColor = computed(() => userStore.settings.accentColor || 'teal')
-const colorHintEnabled = computed(() => userStore.settings.colorHintEnabled)
+const colorHintEnabled = computed(() => userStore.settings.colorHintEnabled ?? false)
 
-// Element-based color (inline style)
+// Element-based color (inline style) for revealed cards
 const elementColorStyle = computed(() => {
-  if (!colorHintEnabled.value) return null
+  if (!colorHintEnabled.value || !props.card.value) return null
   const { bg, text } = getElementColor(props.card.value)
   return { backgroundColor: bg, color: text, borderColor: bg }
 })
 
 const revealedBgClass = computed(() => {
-  // If color hint enabled, use inline style instead of Tailwind classes
-  if (colorHintEnabled.value) return 'border-2'
+  // If color hint enabled, only use border class (background from inline style)
+  if (colorHintEnabled.value) return ''
 
   const colorMap: Record<string, string> = {
     blue: 'bg-gradient-to-br from-blue-500 to-blue-700 border-blue-400',

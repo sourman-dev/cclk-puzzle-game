@@ -13,10 +13,12 @@ import { useGameLogic } from '@/composables/use-game-logic'
 import { useTimer } from '@/composables/use-timer'
 import { useUserStore } from '@/stores/user'
 import { getLevelById } from '@/data/levels'
-import type { Level } from '@/types'
+import type { Level, RuleType } from '@/types'
 
 interface Props {
   levelId: string
+  rules: RuleType[]
+  rounds: number
 }
 
 const props = defineProps<Props>()
@@ -73,7 +75,8 @@ function startNewRound() {
   selectedAnswer.value = null
   showResult.value = false
 
-  generateQuestion(level.value, settings.value)
+  // Pass props.rules to generateQuestion
+  generateQuestion(level.value, { ...settings.value, enabledRules: props.rules })
 }
 
 function handleAnswer(answer: string) {
@@ -91,7 +94,7 @@ function handleAnswer(answer: string) {
 
   // Auto-advance after delay
   setTimeout(() => {
-    if (roundNumber.value >= settings.value.roundsPerLevel) {
+    if (roundNumber.value >= props.rounds) {
       finishLevel()
     } else {
       roundNumber.value++
@@ -111,8 +114,8 @@ function finishLevel() {
   timer.stop()
   showComplete.value = true
 
-  // Calculate stars from total points (max = roundsPerLevel)
-  const maxPoints = settings.value.roundsPerLevel
+  // Calculate stars from total points (max = props.rounds)
+  const maxPoints = props.rounds
   const finalStars = calculateStarsFromPoints(totalPoints.value, maxPoints)
 
   // Update progress
@@ -156,7 +159,7 @@ function handlePlayAgain() {
           :max-time="settings.initialTime"
         />
         <div class="flex items-center gap-3">
-          <span class="text-sm text-gray-500">{{ roundNumber }}/{{ settings.roundsPerLevel }}</span>
+          <span class="text-sm text-gray-500">{{ roundNumber }}/{{ rounds }}</span>
           <span class="text-xl font-bold text-primary">{{ totalPoints.toFixed(1) }}đ</span>
         </div>
       </div>
@@ -202,11 +205,11 @@ function handlePlayAgain() {
           {{ correctAnswers }}/{{ roundNumber }} câu đúng
         </p>
         <p class="text-lg mb-4">
-          {{ totalPoints.toFixed(1) }}/{{ settings.roundsPerLevel }} điểm
+          {{ totalPoints.toFixed(1) }}/{{ rounds }} điểm
         </p>
         <div class="flex justify-center">
           <StarRating
-            :stars="calculateStarsFromPoints(totalPoints, settings.roundsPerLevel)"
+            :stars="calculateStarsFromPoints(totalPoints, rounds)"
             size="lg"
           />
         </div>
