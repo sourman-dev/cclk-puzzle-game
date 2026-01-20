@@ -3,12 +3,14 @@ export type RuleType = 'tuong_sinh' | 'phan_sinh' | 'tuong_khac'
 
 // Topic types (knowledge categories)
 export type TopicType =
-  | 'ngu_hanh'      // Thổ, Kim, Thủy, Thử, Mộc, Hỏa
-  | 'luc_tang'      // 6 Tạng
-  | 'luc_phu'       // 6 Phủ
-  | 'kinh_am'       // Kinh Âm
-  | 'kinh_duong'    // Kinh Dương
-  | 'luc_khi'       // 6 Khí tự nhiên
+  | 'ngu_hanh'        // Thổ, Kim, Thủy, Thử, Mộc, Hỏa
+  | 'luc_khi_tinh'    // Thấp, Táo, Hàn, Thử, Phong, Hoả
+  | 'luc_kinh_base'   // Thái Âm, Dương Minh, Thái Dương, Thiếu Âm, Quyết Âm, Thiếu Dương
+  | 'luc_tang'        // 6 Tạng
+  | 'luc_phu'         // 6 Phủ
+  | 'kinh_am'         // Kinh Âm
+  | 'kinh_duong'      // Kinh Dương
+  | 'luc_khi'         // 6 Khí tự nhiên
 
 // Card state in game
 export interface Card {

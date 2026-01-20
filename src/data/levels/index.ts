@@ -14,9 +14,9 @@ export const LEVELS: Level[] = [
     id: 'level_2',
     order: 2,
     title: 'Lục Khí Nâng Cao',
-    description: 'Thêm quy luật Phản Sinh và Tương Khắc',
-    topics: ['ngu_hanh'],
-    rules: ['tuong_sinh', 'phan_sinh', 'tuong_khac'],
+    description: 'Lục Khí tính chất (Thấp, Táo, Hàn...) và Lục Kinh cơ bản (Thái Âm, Dương Minh...)',
+    topics: ['luc_khi_tinh', 'luc_kinh_base'],
+    rules: ['tuong_sinh', 'phan_sinh'],
     unlocked: false,
     reviewFromLevels: ['level_1']
   },

@@ -1,5 +1,5 @@
 import type { RuleType } from '@/types'
-import { NGU_HANH_SEQUENCE, TUONG_KHAC_PAIRS } from './knowledge/sequences'
+import { NGU_HANH_SEQUENCE, TUONG_KHAC_PAIRS, LUC_KHI_TINH_SEQUENCE, LUC_KINH_BASE_SEQUENCE } from './knowledge/sequences'
 import { LUC_TANG_SEQUENCE } from './knowledge/luc-tang'
 import { LUC_PHU_SEQUENCE } from './knowledge/luc-phu'
 import { KINH_AM_SEQUENCE, KINH_DUONG_SEQUENCE } from './knowledge/kinh-lac'
@@ -67,6 +67,10 @@ export function getSequenceForTopic(topicType: string): readonly string[] {
   switch (topicType) {
     case 'ngu_hanh':
       return NGU_HANH_SEQUENCE
+    case 'luc_khi_tinh':
+      return LUC_KHI_TINH_SEQUENCE
+    case 'luc_kinh_base':
+      return LUC_KINH_BASE_SEQUENCE
     case 'luc_tang':
       return LUC_TANG_SEQUENCE
     case 'luc_phu':
