@@ -64,6 +64,7 @@ export interface GameSettings {
   roundsPerLevel: number
   theme: 'dark' | 'light' | 'system'
   accentColor: AccentColor
+  colorHintEnabled: boolean // Show element-based colors instead of accent
 }
 
 // User data

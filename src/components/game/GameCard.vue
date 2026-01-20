@@ -2,18 +2,30 @@
 import { computed } from 'vue'
 import type { Card } from '@/types'
 import { useUserStore } from '@/stores/user'
+import { getElementColor } from '@/data/knowledge/element-colors'
 
 interface Props {
   card: Card
   showHint?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const userStore = useUserStore()
 const accentColor = computed(() => userStore.settings.accentColor || 'teal')
+const colorHintEnabled = computed(() => userStore.settings.colorHintEnabled)
+
+// Element-based color (inline style)
+const elementColorStyle = computed(() => {
+  if (!colorHintEnabled.value) return null
+  const { bg, text } = getElementColor(props.card.value)
+  return { backgroundColor: bg, color: text, borderColor: bg }
+})
 
 const revealedBgClass = computed(() => {
+  // If color hint enabled, use inline style instead of Tailwind classes
+  if (colorHintEnabled.value) return 'border-2'
+
   const colorMap: Record<string, string> = {
     blue: 'bg-gradient-to-br from-blue-500 to-blue-700 border-blue-400',
     teal: 'bg-gradient-to-br from-teal-500 to-teal-700 border-teal-400',
@@ -46,15 +58,17 @@ const revealedBgClass = computed(() => {
       <span v-if="card.isTarget" class="absolute top-1 right-1 text-xl">❓</span>
     </div>
 
-    <!-- Back (revealed/mở) - màu accent -->
+    <!-- Back (revealed/mở) - màu accent hoặc element -->
     <div
       :class="[
         'absolute inset-0 flex flex-col items-center justify-center rounded-xl backface-hidden rotate-y-180',
-        'text-white border-2',
+        'border-2',
+        !colorHintEnabled && 'text-white',
         revealedBgClass
       ]"
+      :style="elementColorStyle"
     >
-      <span class="text-xs text-white/70">{{ card.position }}</span>
+      <span :class="['text-xs', colorHintEnabled ? 'opacity-70' : 'text-white/70']">{{ card.position }}</span>
       <span class="text-lg font-bold mt-1">{{ card.value }}</span>
     </div>
   </div>

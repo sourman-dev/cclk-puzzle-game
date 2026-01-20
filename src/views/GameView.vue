@@ -8,6 +8,7 @@ import RuleIndicator from '@/components/game/RuleIndicator.vue'
 import HintButton from '@/components/game/HintButton.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseModal from '@/components/ui/BaseModal.vue'
+import ColorHintSwitch from '@/components/game/ColorHintSwitch.vue'
 import { useGameLogic } from '@/composables/use-game-logic'
 import { useTimer } from '@/composables/use-timer'
 import { useUserStore } from '@/stores/user'
@@ -144,7 +145,7 @@ function handlePlayAgain() {
     <header class="flex items-center justify-between px-4 py-3 pt-safe border-b border-color">
       <button @click="handleExit" class="text-xl">←</button>
       <span class="font-semibold">{{ level?.title }}</span>
-      <span class="w-8"></span>
+      <ColorHintSwitch />
     </header>
 
     <main v-if="currentQuestion" class="flex-1 flex flex-col px-4 py-2 gap-2">
