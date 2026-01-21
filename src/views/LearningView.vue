@@ -200,6 +200,10 @@ const BIEU_LY = [
             <p class="text-xs font-semibold text-accent">Lục Tạng</p>
             <p class="text-sm">"Tỳ Phế Thận, Bào Can Tâm"</p>
           </div>
+          <div class="p-2 bg-secondary rounded-lg">
+            <p class="text-xs font-semibold text-accent">Lục Phủ</p>
+            <p class="text-sm">"Đại Vị Bàng, Tam Đởm Tiểu"</p>
+          </div>
         </div>
 
         <!-- Speed Tips -->
