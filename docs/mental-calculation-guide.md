@@ -150,9 +150,49 @@ Phế-ĐTr → Vị-Tỳ → Tâm-TTr → BQ-Thận → TBào-TTiêu → Đởm-
 
 ---
 
-## 7. Luyện Tập
+## 8. Bài Thơ 12 Đường Kinh - Điểm Khởi/Cuối
 
-Hãy tự test với các câu sau:
+### Mnemonic thơ
+
+```
+10 đầu ngón TAY:
+"Phế cái - đại trỏ - bào lạc trung
+ Áp Tam - tâm út - tiểu trường đồng"
+
+10 đầu ngón CHÂN (riêng Thận ở lòng bàn chân):
+"Út bàng - áp đởm - trung bàn thận
+ Vị trỏ - can tỳ ngón cái cùng"
+```
+
+### Bảng giải mã
+
+**Ngón TAY (Thủ):**
+| Ngón | Âm | Dương |
+|------|-----|-------|
+| Cái | Phế | - |
+| Trỏ | - | Đại Trường |
+| Giữa | Tâm Bào | - |
+| Áp út | - | Tam Tiêu |
+| Út | Tâm | Tiểu Trường |
+
+**Ngón CHÂN (Túc):**
+| Ngón | Âm | Dương |
+|------|-----|-------|
+| Cái | Can, Tỳ | - |
+| Trỏ | - | Vị |
+| Áp út | - | Đởm |
+| Út | - | Bàng Quang |
+| Lòng bàn chân | Thận | - |
+
+### Pattern nhớ nhanh
+- **Kinh Âm**: Chạy ở mặt TRONG tay/chân
+- **Kinh Dương**: Chạy ở mặt NGOÀI tay/chân
+- **Ngón út** đặc biệt: Có 2 kinh (Tâm + Tiểu Trường ở tay, Bàng Quang ở chân)
+- **Ngón cái chân**: Có 2 kinh Âm (Can + Tỳ)
+
+---
+
+## 9. Luyện Tập
 
 1. Thấp (pos 1) + 3 theo Tương Sinh = ?
 2. Phong (pos 5) khắc với gì?
