@@ -32,15 +32,22 @@ export const useUserStore = defineStore('user', () => {
   let initialData: UserData
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
-    initialData = stored
-      ? JSON.parse(stored)
-      : {
-          id: generateUUID(),
-          settings: DEFAULT_SETTINGS,
-          progress: {},
-          createdAt: Date.now(),
-          lastPlayedAt: Date.now()
-        }
+    if (stored) {
+      const parsed = JSON.parse(stored) as UserData
+      // Merge with defaults to ensure new settings are available
+      initialData = {
+        ...parsed,
+        settings: { ...DEFAULT_SETTINGS, ...parsed.settings }
+      }
+    } else {
+      initialData = {
+        id: generateUUID(),
+        settings: DEFAULT_SETTINGS,
+        progress: {},
+        createdAt: Date.now(),
+        lastPlayedAt: Date.now()
+      }
+    }
   } catch {
     // Corrupted localStorage data
     initialData = {

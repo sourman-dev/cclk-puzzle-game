@@ -5,11 +5,13 @@ import LevelSelector from '@/components/layout/LevelSelector.vue'
 import BaseModal from '@/components/ui/BaseModal.vue'
 import SettingsView from './SettingsView.vue'
 import LevelStartDialog from '@/components/game/LevelStartDialog.vue'
+import ComprehensiveLevelDialog from '@/components/game/ComprehensiveLevelDialog.vue'
 import { getLevelById } from '@/data/levels'
 import type { Level, RuleType } from '@/types'
 
 const showSettings = ref(false)
 const showLevelDialog = ref(false)
+const showComprehensiveDialog = ref(false)
 const selectedLevelId = ref<string | null>(null)
 
 const selectedLevel = computed<Level | null>(() =>
@@ -18,6 +20,7 @@ const selectedLevel = computed<Level | null>(() =>
 
 const emit = defineEmits<{
   startLevel: [levelId: string, rules: RuleType[], rounds: number]
+  startComprehensive: [levelIds: string[], rules: RuleType[], rounds: number]
   openLearning: []
 }>()
 
@@ -26,11 +29,20 @@ function handleSelectLevel(levelId: string) {
   showLevelDialog.value = true
 }
 
+function handleSelectComprehensive() {
+  showComprehensiveDialog.value = true
+}
+
 function handleStartLevel(rules: RuleType[], rounds: number) {
   if (selectedLevelId.value) {
     showLevelDialog.value = false
     emit('startLevel', selectedLevelId.value, rules, rounds)
   }
+}
+
+function handleStartComprehensive(levelIds: string[], rules: RuleType[], rounds: number) {
+  showComprehensiveDialog.value = false
+  emit('startComprehensive', levelIds, rules, rounds)
 }
 </script>
 
@@ -54,7 +66,10 @@ function handleStartLevel(rules: RuleType[], rounds: number) {
         📖 Học tập Lục Khí
       </button>
 
-      <LevelSelector @select-level="handleSelectLevel" />
+      <LevelSelector
+        @select-level="handleSelectLevel"
+        @select-comprehensive="handleSelectComprehensive"
+      />
     </main>
 
     <!-- Settings Modal -->
@@ -72,6 +87,13 @@ function handleStartLevel(rules: RuleType[], rounds: number) {
       :level="selectedLevel"
       @close="showLevelDialog = false"
       @start="handleStartLevel"
+    />
+
+    <!-- Comprehensive Level Dialog -->
+    <ComprehensiveLevelDialog
+      :open="showComprehensiveDialog"
+      @close="showComprehensiveDialog = false"
+      @start="handleStartComprehensive"
     />
   </div>
 </template>

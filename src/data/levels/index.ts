@@ -62,7 +62,19 @@ export const LEVELS: Level[] = [
   }
 ]
 
+// Special comprehensive level that combines multiple levels
+export const COMPREHENSIVE_LEVEL: Level = {
+  id: 'tong_hop',
+  order: 99,
+  title: 'Tổng hợp',
+  description: 'Ôn tập tất cả kiến thức - chọn nhiều level để luyện tập',
+  topics: ['luc_hanh', 'luc_khi_tinh', 'luc_kinh_base', 'luc_tang', 'luc_phu', 'kinh_am', 'kinh_duong'],
+  rules: ['tuong_sinh', 'phan_sinh'],
+  unlocked: true
+}
+
 export function getLevelById(id: string): Level | undefined {
+  if (id === 'tong_hop') return COMPREHENSIVE_LEVEL
   return LEVELS.find(l => l.id === id)
 }
 

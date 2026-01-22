@@ -17,6 +17,7 @@ import type { Level, RuleType, Question } from '@/types'
 
 interface Props {
   levelId: string
+  levelIds?: string[] // For comprehensive mode
   rules: RuleType[]
   rounds: number
 }
@@ -34,15 +35,18 @@ const {
   currentQuestion,
   selectedAnswer,
   generateMixedQuestions,
+  generateComprehensiveQuestions,
   submitAnswer,
   useHint: useHintLogic,
   calculatePoints,
   calculateStarsFromPoints,
-  getElapsedTime
+  getElapsedTime,
+  resetRoundTimer
 } = useGameLogic()
 
 const settings = computed(() => userStore.settings)
 const level = computed<Level | undefined>(() => getLevelById(props.levelId))
+const isComprehensiveMode = computed(() => props.levelIds && props.levelIds.length > 0)
 
 const timer = useTimer(settings.value.initialTime)
 
@@ -56,15 +60,30 @@ const showComplete = ref(false)
 // Pre-generated questions with spaced repetition
 const questionQueue = ref<Question[]>([])
 
-// Start game
-onMounted(() => {
-  if (level.value) {
-    // Pre-generate all questions with spaced repetition (25% from previous levels)
-    questionQueue.value = generateMixedQuestions(
+// Generate questions based on mode
+function generateQuestions(): Question[] {
+  if (isComprehensiveMode.value && props.levelIds) {
+    // Comprehensive mode: proportional distribution from selected levels
+    return generateComprehensiveQuestions(
+      props.levelIds,
+      { ...settings.value, enabledRules: props.rules },
+      props.rounds
+    )
+  } else if (level.value) {
+    // Regular mode: spaced repetition from previous levels
+    return generateMixedQuestions(
       level.value,
       { ...settings.value, enabledRules: props.rules },
       props.rounds
     )
+  }
+  return []
+}
+
+// Start game
+onMounted(() => {
+  questionQueue.value = generateQuestions()
+  if (questionQueue.value.length > 0) {
     loadNextQuestion()
     timer.start(settings.value.initialTime)
   }
@@ -87,6 +106,8 @@ function loadNextQuestion() {
   if (nextQ) {
     // Set as current question (this updates the reactive ref in useGameLogic)
     currentQuestion.value = nextQ
+    // Reset timer when displaying question (fixes scoring issue)
+    resetRoundTimer()
   }
 }
 
@@ -133,13 +154,15 @@ function finishLevel() {
   const maxPoints = props.rounds
   const finalStars = calculateStarsFromPoints(totalPoints.value, maxPoints)
 
-  // Update progress
-  userStore.updateLevelProgress(props.levelId, {
-    completed: true,
-    bestStars: Math.max(finalStars, userStore.progress[props.levelId]?.bestStars || 0),
-    totalRoundsPlayed: (userStore.progress[props.levelId]?.totalRoundsPlayed || 0) + roundNumber.value,
-    correctAnswers: (userStore.progress[props.levelId]?.correctAnswers || 0) + correctAnswers.value
-  })
+  // Only update progress for regular levels (not comprehensive)
+  if (!isComprehensiveMode.value) {
+    userStore.updateLevelProgress(props.levelId, {
+      completed: true,
+      bestStars: Math.max(finalStars, userStore.progress[props.levelId]?.bestStars || 0),
+      totalRoundsPlayed: (userStore.progress[props.levelId]?.totalRoundsPlayed || 0) + roundNumber.value,
+      correctAnswers: (userStore.progress[props.levelId]?.correctAnswers || 0) + correctAnswers.value
+    })
+  }
 }
 
 function handleExit() {
@@ -152,14 +175,8 @@ function handlePlayAgain() {
   totalPoints.value = 0
   correctAnswers.value = 0
   showComplete.value = false
-  // Regenerate questions with spaced repetition
-  if (level.value) {
-    questionQueue.value = generateMixedQuestions(
-      level.value,
-      { ...settings.value, enabledRules: props.rules },
-      props.rounds
-    )
-  }
+  // Regenerate questions using the same method
+  questionQueue.value = generateQuestions()
   loadNextQuestion()
   timer.start(settings.value.initialTime)
 }

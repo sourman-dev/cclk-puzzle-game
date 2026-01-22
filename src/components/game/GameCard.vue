@@ -14,7 +14,13 @@ const props = defineProps<Props>()
 
 const userStore = useUserStore()
 const accentColor = computed(() => userStore.settings.accentColor || 'teal')
-const colorHintEnabled = computed(() => userStore.settings.colorHintEnabled ?? false)
+
+// Use storeToRefs-like pattern for better reactivity on nested settings
+const colorHintEnabled = computed(() => {
+  // Access the full settings object to trigger reactivity
+  const settings = userStore.settings
+  return settings.colorHintEnabled ?? false
+})
 
 // Element-based color by value (inline style)
 const elementColorStyle = computed(() => {

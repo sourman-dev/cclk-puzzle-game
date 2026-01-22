@@ -30,7 +30,15 @@ export function useGameLogic() {
   const roundStartTime = ref<number>(0)
 
   /**
+   * Reset round timer - call when displaying a new question
+   */
+  function resetRoundTimer() {
+    roundStartTime.value = Date.now()
+  }
+
+  /**
    * Generate a question for the given level and settings
+   * NOTE: Does NOT set roundStartTime - call resetRoundTimer() when displaying
    */
   function generateQuestion(level: Level, settings: GameSettings): Question {
     // Pick random topic from level's topics
@@ -105,10 +113,8 @@ export function useGameLogic() {
       topic
     }
 
-    currentQuestion.value = question
-    selectedAnswer.value = null
-    isCorrect.value = null
-    roundStartTime.value = Date.now()
+    // Don't set currentQuestion here - let caller do it
+    // This allows pre-generation without affecting state
 
     return question
   }
@@ -230,16 +236,48 @@ export function useGameLogic() {
     return shuffle(questions)
   }
 
+  /**
+   * Generate questions from multiple levels with proportional distribution
+   */
+  function generateComprehensiveQuestions(
+    levelIds: string[],
+    settings: GameSettings,
+    totalCount: number
+  ): Question[] {
+    const questions: Question[] = []
+    const levels = levelIds.map(id => LEVELS.find(l => l.id === id)).filter(Boolean) as Level[]
+
+    if (levels.length === 0) return questions
+
+    // Calculate questions per level (proportional distribution)
+    const questionsPerLevel = Math.floor(totalCount / levels.length)
+    const remainder = totalCount % levels.length
+
+    for (let i = 0; i < levels.length; i++) {
+      const level = levels[i] as Level
+      const count = questionsPerLevel + (i < remainder ? 1 : 0)
+
+      for (let j = 0; j < count; j++) {
+        questions.push(generateQuestion(level, settings))
+      }
+    }
+
+    // Shuffle all questions
+    return shuffle(questions)
+  }
+
   return {
     currentQuestion,
     selectedAnswer,
     isCorrect,
     generateQuestion,
     generateMixedQuestions,
+    generateComprehensiveQuestions,
     submitAnswer,
     useHint,
     calculatePoints,
     calculateStarsFromPoints,
-    getElapsedTime
+    getElapsedTime,
+    resetRoundTimer
   }
 }
