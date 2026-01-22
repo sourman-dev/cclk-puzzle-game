@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { LUC_HANH } from '@/data/knowledge/luc-hanh'
-import { LUC_TANG } from '@/data/knowledge/luc-tang'
-import { LUC_PHU } from '@/data/knowledge/luc-phu'
 
 type TopicType = 'luc_hanh' | 'luc_khi' | 'luc_kinh' | 'luc_tang' | 'luc_phu'
 
@@ -22,7 +20,7 @@ const KHI_DESCRIPTIONS: Record<string, string> = {
   'Hỏa': 'Nóng'
 }
 
-// Get secondary label based on topic
+// Get secondary label based on topic (all from LUC_HANH)
 function getSecondaryLabel(element: typeof LUC_HANH[0]): string {
   switch (props.selectedTopic) {
     case 'luc_khi':
@@ -30,9 +28,9 @@ function getSecondaryLabel(element: typeof LUC_HANH[0]): string {
     case 'luc_kinh':
       return element.kinh
     case 'luc_tang':
-      return LUC_TANG.find(t => t.bo === element.ten)?.name || ''
+      return element.tang
     case 'luc_phu':
-      return LUC_PHU.find(p => p.bo === element.ten)?.name || ''
+      return element.phu
     default:
       return ''
   }
