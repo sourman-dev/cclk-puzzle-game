@@ -1,8 +1,14 @@
 import type { RuleType } from '@/types'
-import { LUC_HANH_SEQUENCE, TUONG_KHAC_PAIRS, LUC_KHI_TINH_SEQUENCE, LUC_KINH_BASE_SEQUENCE } from './knowledge/sequences'
-import { LUC_TANG_SEQUENCE } from './knowledge/luc-tang'
-import { LUC_PHU_SEQUENCE } from './knowledge/luc-phu'
-import { KINH_AM_SEQUENCE, KINH_DUONG_SEQUENCE } from './knowledge/kinh-lac'
+import {
+  LUC_HANH_SEQUENCE,
+  LUC_KHI_TINH_SEQUENCE,
+  LUC_KINH_BASE_SEQUENCE,
+  LUC_TANG_SEQUENCE,
+  LUC_PHU_SEQUENCE,
+  KINH_AM_SEQUENCE,
+  KINH_DUONG_SEQUENCE,
+  TUONG_KHAC_PAIRS
+} from './knowledge/sequences'
 
 /**
  * Tính giá trị tại position dựa trên:

@@ -1,5 +1,13 @@
-// Re-export sequences from luc-hanh.ts for backward compatibility
-export { LUC_HANH_SEQUENCE, LUC_KHI_TINH_SEQUENCE, LUC_KINH_BASE_SEQUENCE } from './luc-hanh'
+// Re-export all sequences from luc-hanh.ts (single source of truth)
+export {
+  LUC_HANH_SEQUENCE,
+  LUC_KHI_TINH_SEQUENCE,
+  LUC_KINH_BASE_SEQUENCE,
+  LUC_TANG_SEQUENCE,
+  LUC_PHU_SEQUENCE,
+  KINH_AM_SEQUENCE,
+  KINH_DUONG_SEQUENCE
+} from './luc-hanh'
 export type { LucHanhElement } from './luc-hanh'
 
 // Rule labels in Vietnamese
