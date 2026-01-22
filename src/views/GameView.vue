@@ -13,7 +13,7 @@ import { useGameLogic } from '@/composables/use-game-logic'
 import { useTimer } from '@/composables/use-timer'
 import { useUserStore } from '@/stores/user'
 import { getLevelById } from '@/data/levels'
-import type { Level, RuleType } from '@/types'
+import type { Level, RuleType, Question } from '@/types'
 
 interface Props {
   levelId: string
@@ -33,7 +33,7 @@ const userStore = useUserStore()
 const {
   currentQuestion,
   selectedAnswer,
-  generateQuestion,
+  generateMixedQuestions,
   submitAnswer,
   useHint: useHintLogic,
   calculatePoints,
@@ -53,10 +53,19 @@ const correctAnswers = ref(0)
 const showResult = ref(false)
 const showComplete = ref(false)
 
+// Pre-generated questions with spaced repetition
+const questionQueue = ref<Question[]>([])
+
 // Start game
 onMounted(() => {
   if (level.value) {
-    startNewRound()
+    // Pre-generate all questions with spaced repetition (25% from previous levels)
+    questionQueue.value = generateMixedQuestions(
+      level.value,
+      { ...settings.value, enabledRules: props.rules },
+      props.rounds
+    )
+    loadNextQuestion()
     timer.start(settings.value.initialTime)
   }
 })
@@ -68,15 +77,21 @@ watch(() => timer.timeRemaining.value, (time) => {
   }
 })
 
-function startNewRound() {
-  if (!level.value) return
-
+function loadNextQuestion() {
   hintsUsed.value = 0
   selectedAnswer.value = null
   showResult.value = false
 
-  // Pass props.rules to generateQuestion
-  generateQuestion(level.value, { ...settings.value, enabledRules: props.rules })
+  // Get next question from pre-generated queue
+  const nextQ = questionQueue.value[roundNumber.value - 1]
+  if (nextQ) {
+    // Set as current question (this updates the reactive ref in useGameLogic)
+    currentQuestion.value = nextQ
+  }
+}
+
+function startNewRound() {
+  loadNextQuestion()
 }
 
 function handleAnswer(answer: string) {
@@ -137,7 +152,15 @@ function handlePlayAgain() {
   totalPoints.value = 0
   correctAnswers.value = 0
   showComplete.value = false
-  startNewRound()
+  // Regenerate questions with spaced repetition
+  if (level.value) {
+    questionQueue.value = generateMixedQuestions(
+      level.value,
+      { ...settings.value, enabledRules: props.rules },
+      props.rounds
+    )
+  }
+  loadNextQuestion()
   timer.start(settings.value.initialTime)
 }
 </script>
