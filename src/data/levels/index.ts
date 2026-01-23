@@ -59,6 +59,16 @@ export const LEVELS: Level[] = [
     rules: ['phan_sinh'],
     unlocked: false,
     reviewFromLevels: ['level_4', 'level_5']
+  },
+  {
+    id: 'level_7',
+    order: 7,
+    title: 'Kinh Lạc',
+    description: 'Kết hợp Kinh Âm và Kinh Dương - ôn tập toàn bộ 12 kinh',
+    topics: ['kinh_am', 'kinh_duong'],
+    rules: ['tuong_sinh', 'phan_sinh'],
+    unlocked: false,
+    reviewFromLevels: ['level_5', 'level_6']
   }
 ]
 

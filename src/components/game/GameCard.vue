@@ -12,6 +12,15 @@ interface Props {
 
 const props = defineProps<Props>()
 
+// Auto text sizing based on value length
+const textSizeClass = computed(() => {
+  const len = props.card.value?.length || 0
+  if (len <= 3) return 'text-lg'      // Thổ, Kim, Tỳ
+  if (len <= 6) return 'text-base'    // Thái Âm, Thận
+  if (len <= 10) return 'text-sm'     // Thái Dương
+  return 'text-xs leading-tight'      // Túc Thái Âm Tỳ
+})
+
 const userStore = useUserStore()
 const accentColor = computed(() => userStore.settings.accentColor || 'teal')
 
@@ -89,7 +98,7 @@ const revealedBgClass = computed(() => {
       :style="elementColorStyle"
     >
       <span :class="['text-xs', colorHintEnabled ? 'opacity-70' : 'text-white/70']">{{ card.position }}</span>
-      <span class="text-lg font-bold mt-1">{{ card.value }}</span>
+      <span :class="['font-bold mt-1 text-center px-1', textSizeClass]">{{ card.value }}</span>
     </div>
   </div>
 </template>

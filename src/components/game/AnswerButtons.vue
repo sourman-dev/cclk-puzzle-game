@@ -21,6 +21,19 @@ const emit = defineEmits<{
 const userStore = useUserStore()
 const accentColor = computed(() => userStore.settings.accentColor || 'teal')
 
+// Check if any answer is long (for Kinh Âm/Dương full names)
+const hasLongAnswers = computed(() => {
+  return props.answers.some(a => a.length > 10)
+})
+
+// Auto text sizing based on max answer length
+const textSizeClass = computed(() => {
+  const maxLen = Math.max(...props.answers.map(a => a.length))
+  if (maxLen <= 5) return 'text-sm sm:text-base'
+  if (maxLen <= 10) return 'text-xs sm:text-sm'
+  return 'text-[10px] sm:text-xs leading-tight'
+})
+
 const DEFAULT_BG = 'bg-teal-100 dark:bg-teal-900/40 text-teal-800 dark:text-teal-200 hover:bg-teal-200 dark:hover:bg-teal-800/50'
 const DEFAULT_DISABLED = 'bg-teal-50 dark:bg-teal-950/30 text-teal-400 dark:text-teal-500'
 
@@ -66,15 +79,18 @@ function getButtonClass(answer: string): string {
 </script>
 
 <template>
-  <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 w-full max-w-lg mx-auto">
+  <div :class="[
+    'grid gap-2 w-full max-w-lg mx-auto',
+    hasLongAnswers ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-3 sm:grid-cols-6'
+  ]">
     <button
       v-for="answer in answers"
       :key="answer"
       :disabled="disabled || selectedAnswer !== null"
       @click="emit('select', answer)"
       :class="[
-        'min-h-[52px] px-3 py-2 rounded-lg font-medium transition-all',
-        'text-sm sm:text-base',
+        'min-h-[52px] px-2 py-2 rounded-lg font-medium transition-all',
+        textSizeClass,
         'active:scale-95',
         'disabled:cursor-not-allowed',
         getButtonClass(answer)

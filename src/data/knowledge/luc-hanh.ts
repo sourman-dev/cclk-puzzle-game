@@ -146,6 +146,11 @@ export const LUC_KINH_BASE_SEQUENCE = getSequence('kinh') as readonly string[]
 export const LUC_TANG_SEQUENCE = getSequence('tang') as readonly string[]
 export const LUC_PHU_SEQUENCE = getSequence('phu') as readonly string[]
 
-// Kinh Âm/Dương sequences use tang/phu for simplicity (game học theo Tạng/Phủ)
-export const KINH_AM_SEQUENCE = getSequence('tang') as readonly string[]
-export const KINH_DUONG_SEQUENCE = getSequence('phu') as readonly string[]
+// Kinh Âm/Dương sequences use full names (Túc Thái Âm Tỳ, Thủ Dương Minh Đại Trường...)
+export const KINH_AM_SEQUENCE = getSequence('kinhAm') as readonly string[]
+export const KINH_DUONG_SEQUENCE = getSequence('kinhDuong') as readonly string[]
+
+// Combined sequence for Kinh Lạc level (interleaved: Âm1, Dương1, Âm2, Dương2...)
+export const KINH_LAC_COMBINED_SEQUENCE = LUC_HANH
+  .sort((a, b) => a.thuTuTuongSinh - b.thuTuTuongSinh)
+  .flatMap(e => [e.kinhAm, e.kinhDuong]) as readonly string[]
