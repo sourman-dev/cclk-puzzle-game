@@ -241,9 +241,9 @@ const LUC_BO = [
                 bo.bo }}</span>
               <span class="font-bold text-primary">{{ bo.hanh }}</span>
             </div>
-            <p class="text-secondary truncate"><span class="text-pink-500">Â:</span> {{ bo.kinhAm.split(' ').pop() }}
+            <p class="text-secondary truncate"><span class="text-pink-500">Â:</span> {{ bo.kinhAm }}
             </p>
-            <p class="text-secondary truncate"><span class="text-blue-500">D:</span> {{ bo.kinhDuong.split(' ').pop() }}
+            <p class="text-secondary truncate"><span class="text-blue-500">D:</span> {{ bo.kinhDuong }}
             </p>
           </div>
         </div>
@@ -275,7 +275,7 @@ const LUC_BO = [
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-bold text-accent text-xs">{{ acu.loai }} - {{ acu.ten }}</span>
                     <span class="text-[9px] font-bold bg-accent/10 py-0.5 px-2 rounded-full uppercase">{{ acu.hanh
-                      }}</span>
+                    }}</span>
                   </div>
                   <p class="text-[10px] text-secondary leading-tight line-clamp-2 italic">{{ acu.viTri }}</p>
                 </div>
