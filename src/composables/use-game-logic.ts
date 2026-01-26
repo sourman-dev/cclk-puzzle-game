@@ -6,6 +6,7 @@ import type {
   TopicType,
   Level,
   GameSettings,
+  LevelOptions,
 } from "@/types";
 import { getSequenceForTopic, calculateAnswer } from "@/data/rules";
 import { RULE_LABELS } from "@/data/knowledge/sequences";
@@ -52,7 +53,11 @@ export function useGameLogic() {
    * Generate a question for the given level and settings
    * NOTE: Does NOT set roundStartTime - call resetRoundTimer() when displaying
    */
-  function generateQuestion(level: Level, settings: GameSettings): Question {
+  function generateQuestion(
+    level: Level,
+    settings: GameSettings,
+    options?: LevelOptions,
+  ): Question {
     // Pick random topic from level's topics
     const topic = pickRandom(level.topics, 1)[0] as TopicType;
 
@@ -67,7 +72,12 @@ export function useGameLogic() {
       const isGuessingName =
         topic === "ngu_du_ten_tang" || topic === "ngu_du_ten_phu";
 
-      const candidates = TANG_PHU_DATA.filter((tp) => tp.isTang === isTang);
+      let candidates = TANG_PHU_DATA.filter((tp) => tp.isTang === isTang);
+      if (options?.allowedChannels && options.allowedChannels.length > 0) {
+        candidates = candidates.filter((tp) =>
+          options.allowedChannels!.includes(tp.id),
+        );
+      }
       const selectedTP = pickRandom(candidates, 1)[0];
       if (!selectedTP) throw new Error("No Zang-Fu data found");
 
@@ -110,6 +120,26 @@ export function useGameLogic() {
         }
       }
 
+      // --- Apply Rotate/Shuffle for Five Shu points ---
+      const shouldRotate = options?.rotate ?? true;
+      const shouldShuffle = options?.shuffle ?? true;
+
+      let finalCards = [...cards];
+      let finalTargetPos = targetPosition;
+
+      if (shouldShuffle) {
+        finalCards = shuffle(cards);
+        finalTargetPos = finalCards.findIndex((c) => c.isTarget) + 1;
+      } else if (shouldRotate) {
+        const offset = randomInt(0, count - 1);
+        const rotated: Card[] = [];
+        for (let i = 0; i < count; i++) {
+          rotated.push(cards[(i + offset) % count] as Card);
+        }
+        finalCards = rotated;
+        finalTargetPos = finalCards.findIndex((c) => c.isTarget) + 1;
+      }
+
       const boElement = LUC_HANH.find((e) => e.id === selectedTP.boId);
       const titleOverride = `${selectedTP.ten} (Bộ ${boElement?.ten || selectedTP.boId})`;
 
@@ -133,8 +163,8 @@ export function useGameLogic() {
       }
 
       return {
-        cards,
-        targetPosition,
+        cards: finalCards,
+        targetPosition: finalTargetPos,
         correctAnswer,
         rule: "tuong_sinh",
         ruleLabel: isGuessingName ? "Chọn Tên Huyệt" : "Chọn Hành",
@@ -146,8 +176,8 @@ export function useGameLogic() {
 
     // --- Standard logic for regular levels ---
     // Pick random rule from intersection of level rules and enabled rules
-    const availableRules = level.rules.filter((r) =>
-      settings.enabledRules.includes(r),
+    const availableRules = level.rules.filter(
+      (r) => options?.rules?.includes(r) || settings.enabledRules.includes(r),
     );
     const rule = pickRandom(
       availableRules.length > 0 ? availableRules : level.rules,
@@ -185,7 +215,8 @@ export function useGameLogic() {
 
     // Create cards array with rotated sequence
     // Rotate the sequence to start from a random position (but keep order)
-    const rotateOffset = randomInt(0, 5);
+    const shouldRotate = options?.rotate ?? true;
+    const rotateOffset = shouldRotate ? randomInt(0, 5) : 0;
     const rotatedSequence: string[] = [];
     for (let i = 0; i < 6; i++) {
       rotatedSequence.push(sequence[(i + rotateOffset) % 6] as string);
@@ -211,12 +242,22 @@ export function useGameLogic() {
       });
     }
 
+    // --- Apply Shuffle for Standard levels ---
+    const shouldShuffle = options?.shuffle ?? false; // Default false for standard levels to keep sequence logic clear
+    let finalCards = [...cards];
+    let finalTargetPos = rotatedTargetPosition;
+
+    if (shouldShuffle) {
+      finalCards = shuffle(cards);
+      finalTargetPos = finalCards.findIndex((c) => c.isTarget) + 1;
+    }
+
     // Shuffle answers
     const answers = shuffle([...sequence]);
 
     return {
-      cards,
-      targetPosition,
+      cards: finalCards,
+      targetPosition: finalTargetPos,
       correctAnswer,
       rule,
       ruleLabel: RULE_LABELS[rule],
@@ -316,18 +357,17 @@ export function useGameLogic() {
     level: Level,
     settings: GameSettings,
     count: number,
+    options?: LevelOptions,
   ): Question[] {
     const questions: Question[] = [];
 
     // Calculate how many questions from previous levels
-    const reviewCount = level.reviewFromLevels
-      ? Math.floor(count * 0.25) // 25% from previous levels
-      : 0;
+    const reviewCount = level.reviewFromLevels ? Math.floor(count * 0.25) : 0;
     const currentCount = count - reviewCount;
 
     // Generate current level questions
     for (let i = 0; i < currentCount; i++) {
-      questions.push(generateQuestion(level, settings));
+      questions.push(generateQuestion(level, settings, options));
     }
 
     // Generate review questions from previous levels
@@ -336,7 +376,7 @@ export function useGameLogic() {
         const reviewLevelId = pickRandom(level.reviewFromLevels, 1)[0];
         const reviewLevel = LEVELS.find((l) => l.id === reviewLevelId);
         if (reviewLevel) {
-          questions.push(generateQuestion(reviewLevel, settings));
+          questions.push(generateQuestion(reviewLevel, settings, options));
         }
       }
     }
@@ -352,6 +392,7 @@ export function useGameLogic() {
     levelIds: string[],
     settings: GameSettings,
     totalCount: number,
+    options?: LevelOptions,
   ): Question[] {
     const questions: Question[] = [];
     const levels = levelIds
@@ -369,7 +410,7 @@ export function useGameLogic() {
       const count = questionsPerLevel + (i < remainder ? 1 : 0);
 
       for (let j = 0; j < count; j++) {
-        questions.push(generateQuestion(level, settings));
+        questions.push(generateQuestion(level, settings, options));
       }
     }
 

@@ -45,7 +45,7 @@ const THEORY_BASICS = {
     { ten: 'Hỏa khí', tinhChat: 'Nóng', hanh: 'Hỏa', kinh: 'Thiếu Dương' },
     { ten: 'Thử khí', tinhChat: 'Ấm', hanh: 'Thử', kinh: 'Thiếu Âm' },
     { ten: 'Phong khí', tinhChat: 'Gió', hanh: 'Mộc', kinh: 'Quyết Âm' },
-    { ten: 'Thấm khí', tinhChat: 'Mát', hanh: 'Thổ', kinh: 'Thái Âm' }
+    { ten: 'Thấp khí', tinhChat: 'Mát', hanh: 'Thổ', kinh: 'Thái Âm' }
   ]
 }
 
@@ -275,7 +275,7 @@ const LUC_BO = [
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-bold text-accent text-xs">{{ acu.loai }} - {{ acu.ten }}</span>
                     <span class="text-[9px] font-bold bg-accent/10 py-0.5 px-2 rounded-full uppercase">{{ acu.hanh
-                    }}</span>
+                      }}</span>
                   </div>
                   <p class="text-[10px] text-secondary leading-tight line-clamp-2 italic">{{ acu.viTri }}</p>
                 </div>

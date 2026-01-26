@@ -13,13 +13,12 @@ import { useGameLogic } from '@/composables/use-game-logic'
 import { useTimer } from '@/composables/use-timer'
 import { useUserStore } from '@/stores/user'
 import { getLevelById } from '@/data/levels'
-import type { Level, RuleType, Question } from '@/types'
+import type { Level, RuleType, Question, LevelOptions } from '@/types'
 
 interface Props {
   levelId: string
   levelIds?: string[] // For comprehensive mode
-  rules: RuleType[]
-  rounds: number
+  options: LevelOptions
 }
 
 const props = defineProps<Props>()
@@ -66,15 +65,17 @@ function generateQuestions(): Question[] {
     // Comprehensive mode: proportional distribution from selected levels
     return generateComprehensiveQuestions(
       props.levelIds,
-      { ...settings.value, enabledRules: props.rules },
-      props.rounds
+      { ...settings.value, enabledRules: props.options.rules },
+      props.options.rounds,
+      props.options
     )
   } else if (level.value) {
     // Regular mode: spaced repetition from previous levels
     return generateMixedQuestions(
       level.value,
-      { ...settings.value, enabledRules: props.rules },
-      props.rounds
+      { ...settings.value, enabledRules: props.options.rules },
+      props.options.rounds,
+      props.options
     )
   }
   return []
@@ -130,7 +131,7 @@ function handleAnswer(answer: string) {
 
   // Auto-advance after delay
   setTimeout(() => {
-    if (roundNumber.value >= props.rounds) {
+    if (roundNumber.value >= props.options.rounds) {
       finishLevel()
     } else {
       roundNumber.value++
@@ -150,8 +151,8 @@ function finishLevel() {
   timer.stop()
   showComplete.value = true
 
-  // Calculate stars from total points (max = props.rounds)
-  const maxPoints = props.rounds
+  // Calculate stars from total points (max = props.options.rounds)
+  const maxPoints = props.options.rounds
   const finalStars = calculateStarsFromPoints(totalPoints.value, maxPoints)
 
   // Only update progress for regular levels (not comprehensive)
@@ -196,7 +197,7 @@ function handlePlayAgain() {
       <div class="flex items-center justify-between">
         <GameTimer :time-remaining="timer.timeRemaining.value" :max-time="settings.initialTime" />
         <div class="flex items-center gap-3">
-          <span class="text-sm text-gray-500">{{ roundNumber }}/{{ rounds }}</span>
+          <span class="text-sm text-gray-500">{{ roundNumber }}/{{ options.rounds }}</span>
           <span class="text-xl font-bold text-primary">{{ totalPoints.toFixed(1) }}đ</span>
         </div>
       </div>
@@ -229,10 +230,10 @@ function handlePlayAgain() {
           {{ correctAnswers }}/{{ roundNumber }} câu đúng
         </p>
         <p class="text-lg mb-4">
-          {{ totalPoints.toFixed(1) }}/{{ rounds }} điểm
+          {{ totalPoints.toFixed(1) }}/{{ options.rounds }} điểm
         </p>
         <div class="flex justify-center">
-          <StarRating :stars="calculateStarsFromPoints(totalPoints, rounds)" size="lg" />
+          <StarRating :stars="calculateStarsFromPoints(totalPoints, options.rounds)" size="lg" />
         </div>
       </div>
 

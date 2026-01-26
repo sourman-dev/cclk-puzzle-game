@@ -7,7 +7,7 @@ import SettingsView from './SettingsView.vue'
 import LevelStartDialog from '@/components/game/LevelStartDialog.vue'
 import ComprehensiveLevelDialog from '@/components/game/ComprehensiveLevelDialog.vue'
 import { getLevelById } from '@/data/levels'
-import type { Level, RuleType } from '@/types'
+import type { Level, LevelOptions } from '@/types'
 import { useUserStore } from '@/stores/user'
 
 const userStore = useUserStore()
@@ -22,8 +22,8 @@ const selectedLevel = computed<Level | null>(() =>
 )
 
 const emit = defineEmits<{
-  startLevel: [levelId: string, rules: RuleType[], rounds: number]
-  startComprehensive: [levelIds: string[], rules: RuleType[], rounds: number]
+  startLevel: [levelId: string, options: LevelOptions]
+  startComprehensive: [levelIds: string[], options: LevelOptions]
   openLearning: []
 }>()
 
@@ -31,14 +31,12 @@ function handleSelectLevel(levelId: string) {
   selectedLevelId.value = levelId
   const level = getLevelById(levelId)
 
-  // Skip dialog for Five Shu points levels as requested
+  // Skip dialog for basic Five Shu points levels (Element guessing)
   if (
     level?.topics.includes("ngu_du_tang") ||
-    level?.topics.includes("ngu_du_phu") ||
-    level?.topics.includes("ngu_du_ten_tang") ||
-    level?.topics.includes("ngu_du_ten_phu")
+    level?.topics.includes("ngu_du_phu")
   ) {
-    handleStartLevel(["tuong_sinh"], userStore.settings.roundsPerLevel);
+    handleStartLevel({ rules: ["tuong_sinh"], rounds: userStore.settings.roundsPerLevel });
     return;
   }
 
@@ -49,16 +47,16 @@ function handleSelectComprehensive() {
   showComprehensiveDialog.value = true
 }
 
-function handleStartLevel(rules: RuleType[], rounds: number) {
+function handleStartLevel(options: LevelOptions) {
   if (selectedLevelId.value) {
     showLevelDialog.value = false
-    emit('startLevel', selectedLevelId.value, rules, rounds)
+    emit('startLevel', selectedLevelId.value, options)
   }
 }
 
-function handleStartComprehensive(levelIds: string[], rules: RuleType[], rounds: number) {
+function handleStartComprehensive(levelIds: string[], options: LevelOptions) {
   showComprehensiveDialog.value = false
-  emit('startComprehensive', levelIds, rules, rounds)
+  emit('startComprehensive', levelIds, options)
 }
 </script>
 

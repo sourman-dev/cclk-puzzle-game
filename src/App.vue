@@ -3,29 +3,26 @@ import { ref } from 'vue'
 import HomeView from '@/views/HomeView.vue'
 import GameView from '@/views/GameView.vue'
 import LearningView from '@/views/LearningView.vue'
-import type { RuleType } from '@/types'
+import type { LevelOptions } from '@/types'
 
 type Screen = 'home' | 'game' | 'comprehensive' | 'learning'
 
 const currentScreen = ref<Screen>('home')
 const currentLevelId = ref<string>('')
 const currentLevelIds = ref<string[]>([])
-const currentRules = ref<RuleType[]>(['tuong_sinh'])
-const currentRounds = ref<number>(10)
+const currentOptions = ref<LevelOptions>({ rules: ['tuong_sinh'], rounds: 10 })
 
-function startLevel(levelId: string, rules: RuleType[], rounds: number) {
+function startLevel(levelId: string, options: LevelOptions) {
   currentLevelId.value = levelId
   currentLevelIds.value = []
-  currentRules.value = rules
-  currentRounds.value = rounds
+  currentOptions.value = options
   currentScreen.value = 'game'
 }
 
-function startComprehensive(levelIds: string[], rules: RuleType[], rounds: number) {
+function startComprehensive(levelIds: string[], options: LevelOptions) {
   currentLevelIds.value = levelIds
   currentLevelId.value = 'tong_hop'
-  currentRules.value = rules
-  currentRounds.value = rounds
+  currentOptions.value = options
   currentScreen.value = 'comprehensive'
 }
 
@@ -43,32 +40,14 @@ function exitLearning() {
 </script>
 
 <template>
-  <HomeView
-    v-if="currentScreen === 'home'"
-    @start-level="startLevel"
-    @start-comprehensive="startComprehensive"
-    @open-learning="openLearning"
-  />
+  <HomeView v-if="currentScreen === 'home'" @start-level="startLevel" @start-comprehensive="startComprehensive"
+    @open-learning="openLearning" />
 
-  <GameView
-    v-else-if="currentScreen === 'game'"
-    :level-id="currentLevelId"
-    :rules="currentRules"
-    :rounds="currentRounds"
-    @exit="exitGame"
-  />
+  <GameView v-else-if="currentScreen === 'game'" :level-id="currentLevelId" :options="currentOptions"
+    @exit="exitGame" />
 
-  <GameView
-    v-else-if="currentScreen === 'comprehensive'"
-    :level-id="currentLevelId"
-    :level-ids="currentLevelIds"
-    :rules="currentRules"
-    :rounds="currentRounds"
-    @exit="exitGame"
-  />
+  <GameView v-else-if="currentScreen === 'comprehensive'" :level-id="currentLevelId" :level-ids="currentLevelIds"
+    :options="currentOptions" @exit="exitGame" />
 
-  <LearningView
-    v-else-if="currentScreen === 'learning'"
-    @exit="exitLearning"
-  />
+  <LearningView v-else-if="currentScreen === 'learning'" @exit="exitLearning" />
 </template>

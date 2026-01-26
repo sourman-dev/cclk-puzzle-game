@@ -49,6 +49,15 @@ export interface Level {
   reviewFromLevels?: string[]; // previous levels for spaced repetition
 }
 
+// Extra options for starting a level
+export interface LevelOptions {
+  rules: RuleType[];
+  rounds: number;
+  rotate?: boolean; // Rotate sequence start
+  shuffle?: boolean; // Shuffle card positions
+  allowedChannels?: string[]; // Filter channels (tpId)
+}
+
 // User progress per level
 export interface LevelProgress {
   levelId: string;
