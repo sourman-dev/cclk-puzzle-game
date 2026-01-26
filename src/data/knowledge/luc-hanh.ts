@@ -110,7 +110,7 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     mauSac: "#948d8d",
     mauChu: "#ffffff",
     kinhAm: "Thủ Thái Âm Phế",
-    kinhDuong: "Túc Thái Dương Bàng Quang",
+    kinhDuong: "Túc Dương Minh Vị",
   },
   {
     id: "THAN",
@@ -121,7 +121,7 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     mauSac: "#000000",
     mauChu: "#ffffff",
     kinhAm: "Túc Thiếu Âm Thận",
-    kinhDuong: "Thủ Thái Dương Tiểu Trường",
+    kinhDuong: "Túc Thái Dương Bàng Quang",
   },
   {
     id: "TAM",
@@ -132,7 +132,7 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     mauSac: "#ff0090",
     mauChu: "#ffffff",
     kinhAm: "Thủ Thiếu Âm Tâm",
-    kinhDuong: "Túc Thiếu Dương Đởm",
+    kinhDuong: "Thủ Thái Dương Tiểu Trường",
   },
   {
     id: "CAN",
@@ -143,7 +143,7 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     mauSac: "#00b797",
     mauChu: "#ffffff",
     kinhAm: "Túc Quyết Âm Can",
-    kinhDuong: "Thủ Thiếu Dương Tam Tiêu",
+    kinhDuong: "Túc Thiếu Dương Đởm",
   },
   {
     id: "TBL",
@@ -154,7 +154,7 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     mauSac: "#ff0000",
     mauChu: "#ffffff",
     kinhAm: "Thủ Quyết Âm Tâm Bào",
-    kinhDuong: "Túc Dương Minh Vị",
+    kinhDuong: "Thủ Thiếu Dương Tam Tiêu",
   },
 
   // --- PHỦ (Kinh Dương): HÀNH != BỘ ---
@@ -170,14 +170,25 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     kinhDuong: "Thủ Dương Minh Đại Trường",
   },
   {
+    id: "VI",
+    ten: "Vị",
+    isTang: false,
+    hanhId: "THO", // Hành Thổ
+    boId: "KIM", // Bộ Kim
+    mauSac: "#ac8308ff",
+    mauChu: "#000000",
+    kinhAm: "Thủ Thái Âm Phế",
+    kinhDuong: "Túc Dương Minh Vị",
+  },
+  {
     id: "BANG_QUANG",
     ten: "Bàng Quang",
     isTang: false,
     hanhId: "THUY", // Hành Thủy
-    boId: "KIM", // Bộ Kim
+    boId: "THUY", // Bộ Thủy
     mauSac: "#000000",
     mauChu: "#ffffff",
-    kinhAm: "Thủ Thái Âm Phế",
+    kinhAm: "Túc Thiếu Âm Thận",
     kinhDuong: "Túc Thái Dương Bàng Quang",
   },
   {
@@ -185,10 +196,10 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     ten: "Tiểu Trường",
     isTang: false,
     hanhId: "THU", // Hành Thử
-    boId: "THUY", // Bộ Thủy
+    boId: "THU", // Bộ Thử
     mauSac: "#ff0090",
     mauChu: "#ffffff",
-    kinhAm: "Túc Thiếu Âm Thận",
+    kinhAm: "Thủ Thiếu Âm Tâm",
     kinhDuong: "Thủ Thái Dương Tiểu Trường",
   },
   {
@@ -196,10 +207,10 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     ten: "Đởm",
     isTang: false,
     hanhId: "MOC", // Hành Mộc
-    boId: "THU", // Bộ Thử
+    boId: "MOC", // Bộ Mộc
     mauSac: "#00b797",
     mauChu: "#ffffff",
-    kinhAm: "Thủ Thiếu Âm Tâm",
+    kinhAm: "Túc Quyết Âm Can",
     kinhDuong: "Túc Thiếu Dương Đởm",
   },
   {
@@ -207,22 +218,11 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     ten: "Tam Tiêu",
     isTang: false,
     hanhId: "HOA", // Hành Hỏa
-    boId: "MOC", // Bộ Mộc
+    boId: "HOA", // Bộ Hỏa
     mauSac: "#ff0000",
     mauChu: "#ffffff",
-    kinhAm: "Túc Quyết Âm Can",
-    kinhDuong: "Thủ Thiếu Dương Tam Tiêu",
-  },
-  {
-    id: "VI",
-    ten: "Vị",
-    isTang: false,
-    hanhId: "THO", // Hành Thổ
-    boId: "HOA", // Bộ Hỏa
-    mauSac: "#ac8308ff",
-    mauChu: "#000000",
     kinhAm: "Thủ Quyết Âm Tâm Bào",
-    kinhDuong: "Túc Dương Minh Vị",
+    kinhDuong: "Thủ Thiếu Dương Tam Tiêu",
   },
 ];
 
@@ -249,11 +249,11 @@ export const LUC_HANH: LucHanhElement[] = [
     mauSac: "#948d8d",
     mauChu: "#ffffff",
     khi: "Táo",
-    kinh: "Thái Âm / Thái Dương",
+    kinh: "Thái Âm / Dương Minh",
     tang: "Phế",
-    phu: "Bàng Quang",
+    phu: "Vị",
     kinhAm: "Thủ Thái Âm Phế",
-    kinhDuong: "Túc Thái Dương Bàng Quang",
+    kinhDuong: "Túc Dương Minh Vị",
   },
   {
     id: "THUY",
@@ -265,9 +265,9 @@ export const LUC_HANH: LucHanhElement[] = [
     khi: "Hàn",
     kinh: "Thiếu Âm / Thái Dương",
     tang: "Thận",
-    phu: "Tiểu Trường",
+    phu: "Bàng Quang",
     kinhAm: "Túc Thiếu Âm Thận",
-    kinhDuong: "Thủ Thái Dương Tiểu Trường",
+    kinhDuong: "Túc Thái Dương Bàng Quang",
   },
   {
     id: "THU",
@@ -277,11 +277,11 @@ export const LUC_HANH: LucHanhElement[] = [
     mauSac: "#ff0090",
     mauChu: "#ffffff",
     khi: "Thử",
-    kinh: "Thiếu Âm / Thiếu Dương",
+    kinh: "Thiếu Âm / Thái Dương",
     tang: "Tâm",
-    phu: "Đởm",
+    phu: "Tiểu Trường",
     kinhAm: "Thủ Thiếu Âm Tâm",
-    kinhDuong: "Túc Thiếu Dương Đởm",
+    kinhDuong: "Thủ Thái Dương Tiểu Trường",
   },
   {
     id: "MOC",
@@ -293,9 +293,9 @@ export const LUC_HANH: LucHanhElement[] = [
     khi: "Phong",
     kinh: "Quyết Âm / Thiếu Dương",
     tang: "Can",
-    phu: "Tam Tiêu",
+    phu: "Đởm",
     kinhAm: "Túc Quyết Âm Can",
-    kinhDuong: "Thủ Thiếu Dương Tam Tiêu",
+    kinhDuong: "Túc Thiếu Dương Đởm",
   },
   {
     id: "HOA",
@@ -305,11 +305,11 @@ export const LUC_HANH: LucHanhElement[] = [
     mauSac: "#ff0000",
     mauChu: "#ffffff",
     khi: "Hỏa",
-    kinh: "Quyết Âm / Dương Minh",
+    kinh: "Quyết Âm / Thiếu Dương",
     tang: "Tâm Bào Lạc",
-    phu: "Vị",
+    phu: "Tam Tiêu",
     kinhAm: "Thủ Quyết Âm Tâm Bào",
-    kinhDuong: "Túc Dương Minh Vị",
+    kinhDuong: "Thủ Thiếu Dương Tam Tiêu",
   },
 ];
 

@@ -13,7 +13,7 @@ import { useGameLogic } from '@/composables/use-game-logic'
 import { useTimer } from '@/composables/use-timer'
 import { useUserStore } from '@/stores/user'
 import { getLevelById } from '@/data/levels'
-import type { Level, RuleType, Question, LevelOptions } from '@/types'
+import type { Level, Question, LevelOptions } from '@/types'
 
 interface Props {
   levelId: string
