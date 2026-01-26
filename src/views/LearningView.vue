@@ -5,9 +5,10 @@ import { ACUPOINTS_DATA } from '@/data/knowledge/acupoints'
 import { LUC_HANH } from '@/data/knowledge/luc-hanh'
 
 import { TANG_PHU_DATA } from '@/data/knowledge/luc-hanh'
+import { ACUPUNCTURE_SETS, type AcupunctureSystem } from '@/data/knowledge/acupuncture-sets'
 
-type TopicType = 'luc_hanh' | 'luc_khi' | 'luc_kinh' | 'luc_tang' | 'luc_phu'
-type TabType = 'theory' | 'diagram' | 'table' | 'huyet' | 'formulas' | 'tips'
+import type { TopicType } from '@/types'
+type TabType = 'theory' | 'diagram' | 'table' | 'huyet' | 'bo_huyet' | 'formulas' | 'tips'
 
 const emit = defineEmits<{ exit: [] }>()
 
@@ -27,6 +28,7 @@ const TABS: { value: TabType; label: string }[] = [
   { value: 'diagram', label: 'Sơ đồ' },
   { value: 'table', label: 'Bảng' },
   { value: 'huyet', label: 'Huyệt' },
+  { value: 'bo_huyet', label: 'Bộ Huyệt' },
   { value: 'formulas', label: 'Công thức' },
   { value: 'tips', label: 'Mẹo' }
 ]
@@ -66,32 +68,43 @@ function getAcupointsForKinh(kinhFull: string) {
 
 // Master table data (position-based)
 const MASTER_TABLE = [
-  { pos: 1, hanh: 'Thổ', khi: 'Thấp', kinh: 'Thái Âm', tang: 'Tỳ', phu: 'Đại Trường' },
-  { pos: 2, hanh: 'Kim', khi: 'Táo', kinh: 'Dương Minh', tang: 'Phế', phu: 'Vị' },
-  { pos: 3, hanh: 'Thủy', khi: 'Hàn', kinh: 'Thái Dương', tang: 'Thận', phu: 'Bàng Quang' },
-  { pos: 4, hanh: 'Thử', khi: 'Thử', kinh: 'Thiếu Âm', tang: 'Tâm', phu: 'Tiểu Trường' },
-  { pos: 5, hanh: 'Mộc', khi: 'Phong', kinh: 'Quyết Âm', tang: 'Can', phu: 'Đởm' },
-  { pos: 6, hanh: 'Hỏa', khi: 'Hỏa', kinh: 'Thiếu Dương', tang: 'Tâm Bào', phu: 'Tam Tiêu' }
+  { pos: 1, hanh: 'Thổ', khi: 'Thấp', kinh: 'Thái Âm / Dương Minh', tang: 'Tỳ', phu: 'Đại Trường' },
+  { pos: 2, hanh: 'Kim', khi: 'Táo', kinh: 'Thái Âm / Dương Minh', tang: 'Phế', phu: 'Vị' },
+  { pos: 3, hanh: 'Thủy', khi: 'Hàn', kinh: 'Thiếu Âm / Thái Dương', tang: 'Thận', phu: 'Tiểu Trường' },
+  { pos: 4, hanh: 'Thử', khi: 'Thử', kinh: 'Thiếu Âm / Thái Dương', tang: 'Tâm', phu: 'Bàng Quang' },
+  { pos: 5, hanh: 'Mộc', khi: 'Phong', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Can', phu: 'Tam Tiêu' },
+  { pos: 6, hanh: 'Hỏa', khi: 'Hỏa', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Tâm Bào', phu: 'Đởm' }
 ]
 
 // Biểu Lý pairs
 const BIEU_LY = [
   { tang: 'Tỳ', phu: 'Đại Trường', bo: 1 },
   { tang: 'Phế', phu: 'Vị', bo: 2 },
-  { tang: 'Thận', phu: 'Bàng Quang', bo: 3 },
-  { tang: 'Tâm Bào', phu: 'Tam Tiêu', bo: 4 },
-  { tang: 'Can', phu: 'Đởm', bo: 5 },
-  { tang: 'Tâm', phu: 'Tiểu Trường', bo: 6 }
+  { tang: 'Thận', phu: 'Tiểu Trường', bo: 3 },
+  { tang: 'Tâm', phu: 'Bàng Quang', bo: 4 },
+  { tang: 'Can', phu: 'Tam Tiêu', bo: 5 },
+  { tang: 'Tâm Bào', phu: 'Đởm', bo: 6 }
 ]
 
 // 6 Bộ với Kinh Âm + Kinh Dương chi tiết
 const LUC_BO = [
   { bo: 1, hanh: 'Thổ', kinhAm: 'Túc Thái Âm Tỳ', kinhDuong: 'Thủ Dương Minh Đại Trường', viTriAm: 'túc', viTriDuong: 'thủ' },
   { bo: 2, hanh: 'Kim', kinhAm: 'Thủ Thái Âm Phế', kinhDuong: 'Túc Dương Minh Vị', viTriAm: 'thủ', viTriDuong: 'túc' },
-  { bo: 3, hanh: 'Thủy', kinhAm: 'Túc Thiếu Âm Thận', kinhDuong: 'Túc Thái Dương Bàng Quang', viTriAm: 'túc', viTriDuong: 'túc' },
-  { bo: 4, hanh: 'Thử', kinhAm: 'Thủ Quyết Âm Tâm', kinhDuong: 'Thủ Thiếu Dương Tam Tiêu', viTriAm: 'thủ', viTriDuong: 'thủ' },
-  { bo: 5, hanh: 'Mộc', kinhAm: 'Túc Quyết Âm Can', kinhDuong: 'Túc Thiếu Dương Đởm', viTriAm: 'túc', viTriDuong: 'túc' },
-  { bo: 6, hanh: 'Hỏa', kinhAm: 'Thủ Quyết Âm Tâm Bào', kinhDuong: 'Thủ Thiếu Dương Tam Tiêu', viTriAm: 'thủ', viTriDuong: 'thủ' },
+  { bo: 3, hanh: 'Thủy', kinhAm: 'Túc Thiếu Âm Thận', kinhDuong: 'Thủ Thái Dương Tiểu Trường', viTriAm: 'túc', viTriDuong: 'thủ' },
+  { bo: 4, hanh: 'Thử', kinhAm: 'Thủ Thiếu Âm Tâm', kinhDuong: 'Túc Thái Dương Bàng Quang', viTriAm: 'thủ', viTriDuong: 'túc' },
+  { bo: 5, hanh: 'Mộc', kinhAm: 'Túc Quyết Âm Can', kinhDuong: 'Thủ Thiếu Dương Tam Tiêu', viTriAm: 'túc', viTriDuong: 'thủ' },
+  { bo: 6, hanh: 'Hỏa', kinhAm: 'Thủ Quyết Âm Tâm Bào', kinhDuong: 'Túc Thiếu Dương Đởm', viTriAm: 'thủ', viTriDuong: 'túc' },
+]
+
+const selectedSystem = ref<AcupunctureSystem>('thu_cham')
+const filteredSets = computed(() => ACUPUNCTURE_SETS.filter(s => s.system === selectedSystem.value))
+const activeSetId = ref<string | null>(null)
+
+const SYSTEM_OPTIONS: { value: AcupunctureSystem; label: string }[] = [
+  { value: 'thu_cham', label: 'Thủ Châm' },
+  { value: 'tuc_cham', label: 'Túc Châm' },
+  { value: 'am_cham', label: 'Âm Châm' },
+  { value: 'duong_cham', label: 'Dương Châm' }
 ]
 
 </script>
@@ -275,7 +288,7 @@ const LUC_BO = [
                   <div class="flex items-center justify-between mb-1">
                     <span class="font-bold text-accent text-xs">{{ acu.loai }} - {{ acu.ten }}</span>
                     <span class="text-[9px] font-bold bg-accent/10 py-0.5 px-2 rounded-full uppercase">{{ acu.hanh
-                      }}</span>
+                    }}</span>
                   </div>
                   <p class="text-[10px] text-secondary leading-tight line-clamp-2 italic">{{ acu.viTri }}</p>
                 </div>
@@ -285,7 +298,56 @@ const LUC_BO = [
         </div>
       </div>
 
-      <!-- Tab: Formulas -->
+      <!-- Tab: Bộ Huyệt -->
+      <div v-else-if="activeTab === 'bo_huyet'" class="space-y-4">
+        <h3 class="text-sm font-semibold text-center text-accent">24 Bộ Huyệt Căn Bản</h3>
+
+        <!-- System Selection -->
+        <div class="flex gap-1 p-1 bg-secondary rounded-lg overflow-x-auto no-scrollbar">
+          <button v-for="opt in SYSTEM_OPTIONS" :key="opt.value" @click="selectedSystem = opt.value" :class="[
+            'flex-1 px-3 py-1.5 text-[10px] font-bold rounded-md transition-all whitespace-nowrap',
+            selectedSystem === opt.value ? 'bg-accent text-white shadow-sm' : 'text-secondary hover:bg-gray-100 dark:hover:bg-gray-700'
+          ]">
+            {{ opt.label }}
+          </button>
+        </div>
+
+        <div class="space-y-3">
+          <div v-for="set in filteredSets" :key="set.id"
+            class="border border-color rounded-2xl overflow-hidden bg-secondary/30">
+            <button @click="activeSetId = activeSetId === set.id ? null : set.id"
+              class="w-full p-4 flex items-center justify-between text-left group">
+              <div>
+                <h4 class="font-bold text-accent">{{ set.title }}</h4>
+                <div class="flex gap-2 mt-1">
+                  <span class="text-[9px] px-1.5 py-0.5 bg-green-100 text-green-700 rounded decoration-dotted underline"
+                    title="Chủ kinh">Chủ: {{ set.principalMeridian }}</span>
+                  <span class="text-[9px] px-1.5 py-0.5 bg-red-100 text-red-700 rounded line-through"
+                    title="Kinh khắc (bỏ)">Bỏ: {{ set.skipMeridian }}</span>
+                </div>
+              </div>
+              <span class="text-secondary transition-transform duration-200"
+                :class="{ 'rotate-180': activeSetId === set.id }">▼</span>
+            </button>
+
+            <div v-if="activeSetId === set.id" class="px-4 pb-4 animate-in slide-in-from-top-1 duration-200">
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
+                <div v-for="p in set.points" :key="p.ten"
+                  class="p-2 bg-primary rounded-lg border border-color flex flex-col">
+                  <span class="text-[10px] font-bold text-primary truncate">{{ p.ten }}</span>
+                  <div class="flex items-center justify-between mt-1">
+                    <span class="text-[8px] opacity-70">{{ p.loai }}</span>
+                    <span class="text-[8px] px-1 bg-accent/10 text-accent rounded-full font-mono">{{ p.hanh[0] }}</span>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 text-[10px] text-secondary italic text-center">Tổng số: {{ set.points.length }} huyệt</p>
+            </div>
+          </div>
+          <p v-if="filteredSets.length === 0" class="text-center py-10 text-secondary text-xs italic">Dữ liệu cho hệ
+            châm này đang được cập nhật...</p>
+        </div>
+      </div>
       <div v-else-if="activeTab === 'formulas'" class="space-y-4">
         <h3 class="text-sm font-semibold text-center text-accent">Công Thức & Vận Hành</h3>
 
@@ -331,8 +393,12 @@ const LUC_BO = [
           <h4 class="font-semibold text-sm mb-2">Ví dụ</h4>
           <div class="text-xs space-y-2">
             <div>
-              <p class="text-secondary">Q: Thận (Bộ 3-Thủy), Kinh Dương là Bàng Quang (Hỗ trợ: Kim → Thủy)</p>
-              <p class="text-accent font-bold">Hành Huyệt Tĩnh = Hành Mẹ (Kim sinh Thủy)</p>
+              <p class="text-secondary">Q: Vị thuộc Bộ nào? Tại sao?</p>
+              <p class="text-accent font-bold">A: Vị (hành Thổ) thuộc Bộ 2 (Kim). Cùng Bộ với Phế (Kim).</p>
+            </div>
+            <div>
+              <p class="text-secondary">Q: Thận (Bộ 3-Thủy), Kinh Dương là gì?</p>
+              <p class="text-accent font-bold">A: Thủ Thái Dương Tiểu Trường. (Hành Thử phản sinh Thủy).</p>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ export type RuleType = "tuong_sinh" | "phan_sinh" | "tuong_khac";
 export type TopicType =
   | "luc_hanh" // Thổ, Kim, Thủy, Thử, Mộc, Hỏa
   | "luc_khi_tinh" // Thấp, Táo, Hàn, Thử, Phong, Hoả
-  | "luc_kinh_base" // Thái Âm, Dương Minh, Thái Dương, Thiếu Âm, Quyết Âm, Thiếu Dương
+  | "luc_kinh" // Thái Âm, Dương Minh, Thái Dương, Thiếu Âm, Quyết Âm, Thiếu Dương
   | "luc_tang" // 6 Tạng
   | "luc_phu" // 6 Phủ
   | "kinh_am" // Kinh Âm
@@ -14,7 +14,9 @@ export type TopicType =
   | "ngu_du_tang" // Ngũ du huyệt Tạng (đoán hành)
   | "ngu_du_phu" // Ngũ du huyệt Phủ (đoán hành)
   | "ngu_du_ten_tang" // Ngũ du huyệt Tạng (đoán tên)
-  | "ngu_du_ten_phu"; // Ngũ du huyệt Phủ (đoán tên)
+  | "ngu_du_ten_phu" // Ngũ du huyệt Phủ (đoán tên)
+  | "thanh_lap_bo" // Thành lập bộ (Chủ kinh & Khắc)
+  | "bo_huyet_chi_tiet"; // Chi tiết bộ huyệt (Nhận diện huyệt)
 
 // Card state in game
 export interface Card {

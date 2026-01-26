@@ -17,7 +17,7 @@ export const LEVELS: Level[] = [
     title: "Lục Khí",
     description:
       "Lục Khí tính chất (Thấp, Táo, Hàn...) và Lục Kinh cơ bản (Thái Âm, Dương Minh...)",
-    topics: ["luc_khi_tinh", "luc_kinh_base"],
+    topics: ["luc_khi_tinh", "luc_kinh"],
     rules: ["tuong_sinh", "phan_sinh"],
     unlocked: false,
     reviewFromLevels: ["level_1"],
@@ -106,6 +106,28 @@ export const LEVELS: Level[] = [
     unlocked: false,
     reviewFromLevels: ["level_8", "level_9"],
   },
+  {
+    id: "level_11",
+    order: 11,
+    title: "Thành lập Bộ",
+    description:
+      "Nghiên cứu nguyên tắc châm: Chọn Chủ kinh và Kinh bớt đi (khắc) cho 4 hệ châm.",
+    topics: ["thanh_lap_bo"],
+    rules: ["tuong_sinh"],
+    unlocked: false,
+    reviewFromLevels: ["level_1", "level_4", "level_6"],
+  },
+  {
+    id: "level_12",
+    order: 12,
+    title: "24 Bộ Huyệt",
+    description:
+      "Ghi nhớ danh sách huyệt đạo cụ thể trong 24 bộ huyệt (Thủ, Túc, Âm, Dương).",
+    topics: ["bo_huyet_chi_tiet"],
+    rules: ["tuong_sinh"],
+    unlocked: false,
+    reviewFromLevels: ["level_9", "level_10", "level_11"],
+  },
 ];
 
 // Special comprehensive level that combines multiple levels
@@ -117,7 +139,7 @@ export const COMPREHENSIVE_LEVEL: Level = {
   topics: [
     "luc_hanh",
     "luc_khi_tinh",
-    "luc_kinh_base",
+    "luc_kinh",
     "luc_tang",
     "luc_phu",
     "kinh_am",

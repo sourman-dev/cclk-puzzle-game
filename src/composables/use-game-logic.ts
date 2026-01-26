@@ -16,6 +16,7 @@ import {
   getNguDuForChannel,
   LUC_HANH,
 } from "@/data/knowledge/luc-hanh";
+import { ACUPUNCTURE_SETS } from "@/data/knowledge/acupuncture-sets";
 
 function shuffle<T>(array: T[]): T[] {
   const arr = [...array];
@@ -168,6 +169,71 @@ export function useGameLogic() {
         correctAnswer,
         rule: "tuong_sinh",
         ruleLabel: isGuessingName ? "Chọn Tên Huyệt" : "Chọn Hành",
+        answers,
+        topic,
+        titleOverride,
+      };
+    }
+
+    // --- Special handling for Acupuncture Sets (Thành lập bộ) ---
+    if (topic === "thanh_lap_bo") {
+      const set = pickRandom(ACUPUNCTURE_SETS, 1)[0];
+      if (!set) throw new Error("No acupuncture sets found");
+
+      const questionType = pickRandom(["principal", "skip"], 1)[0];
+      const isPrincipal = questionType === "principal";
+
+      const correctAnswer = isPrincipal
+        ? set.principalMeridian
+        : set.skipMeridian;
+      const titleOverride = `${set.title}`;
+
+      // Answer pool: 6 random meridians names
+      const allPossibleMeridians = TANG_PHU_DATA.flatMap((tp) => [
+        tp.kinhAm,
+        tp.kinhDuong,
+      ]);
+      const otherAnswers = shuffle(
+        allPossibleMeridians.filter((m) => m !== correctAnswer),
+      ).slice(0, 5);
+      const answers = shuffle([correctAnswer, ...otherAnswers]);
+
+      return {
+        cards: [], // No cards for this simple choice level? Or show Element card?
+        targetPosition: 1,
+        correctAnswer,
+        rule: "tuong_sinh",
+        ruleLabel: isPrincipal ? "Chọn Chủ Kinh" : "Chọn Kinh bớt đi (Khắc)",
+        answers,
+        topic,
+        titleOverride,
+      };
+    }
+
+    // --- Special handling for Acupuncture Points (Chi tiết huyệt theo bộ) ---
+    if (topic === "bo_huyet_chi_tiet") {
+      const set = pickRandom(ACUPUNCTURE_SETS, 1)[0];
+      if (!set) throw new Error("No acupuncture sets found");
+
+      const point = pickRandom(set.points, 1)[0]!;
+      const correctAnswer = point.ten;
+      const titleOverride = `${set.title}: ${point.kinh} - ${point.loai}`;
+
+      // Answer pool: Point names
+      const allPointNames = ACUPUNCTURE_SETS.flatMap((s) =>
+        s.points.map((p) => p.ten),
+      );
+      const otherAnswers = shuffle(
+        allPointNames.filter((n) => n !== correctAnswer),
+      ).slice(0, 5);
+      const answers = shuffle([correctAnswer, ...otherAnswers]);
+
+      return {
+        cards: [],
+        targetPosition: 1,
+        correctAnswer,
+        rule: "tuong_sinh",
+        ruleLabel: "Chọn Tên Huyệt",
         answers,
         topic,
         titleOverride,

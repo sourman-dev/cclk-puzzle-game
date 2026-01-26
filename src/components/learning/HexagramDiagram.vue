@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { LUC_HANH } from '@/data/knowledge/luc-hanh'
 
-type TopicType = 'luc_hanh' | 'luc_khi' | 'luc_kinh' | 'luc_tang' | 'luc_phu'
+import type { TopicType } from '@/types'
 
 interface Props {
   selectedTopic: TopicType
@@ -51,12 +51,9 @@ const elements = computed(() => {
   <div class="w-full max-w-md">
     <!-- Cards grid (same as game) -->
     <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-4">
-      <div
-        v-for="el in elements"
-        :key="el.id"
+      <div v-for="el in elements" :key="el.id"
         class="aspect-square rounded-xl flex flex-col items-center justify-center p-2 border-2"
-        :style="{ backgroundColor: el.mauSac, color: el.mauChu, borderColor: el.mauSac }"
-      >
+        :style="{ backgroundColor: el.mauSac, color: el.mauChu, borderColor: el.mauSac }">
         <span class="text-xs opacity-70">{{ el.thuTuTuongSinh }}</span>
         <span class="text-lg font-bold">{{ el.ten }}</span>
         <span v-if="el.secondaryLabel" class="text-xs text-center leading-tight mt-1">

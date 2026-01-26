@@ -1,4 +1,4 @@
-import type { RuleType } from '@/types'
+import type { RuleType } from "@/types";
 import {
   LUC_HANH_SEQUENCE,
   LUC_KHI_TINH_SEQUENCE,
@@ -7,8 +7,8 @@ import {
   LUC_PHU_SEQUENCE,
   KINH_AM_SEQUENCE,
   KINH_DUONG_SEQUENCE,
-  TUONG_KHAC_PAIRS
-} from './knowledge/sequences'
+  TUONG_KHAC_PAIRS,
+} from "./knowledge/sequences";
 
 /**
  * Tính giá trị tại position dựa trên:
@@ -23,47 +23,47 @@ export function calculateAnswer(
   knownPosition: number,
   knownValue: string,
   targetPosition: number,
-  rule: RuleType
+  rule: RuleType,
 ): string {
   // Tìm index của knownValue trong sequence
-  const knownIndex = sequence.indexOf(knownValue)
+  const knownIndex = sequence.indexOf(knownValue);
   if (knownIndex === -1) {
-    throw new Error(`Value "${knownValue}" not found in sequence`)
+    throw new Error(`Value "${knownValue}" not found in sequence`);
   }
 
   // Tính khoảng cách giữa 2 positions
-  const distance = targetPosition - knownPosition
+  const distance = targetPosition - knownPosition;
 
-  let targetIndex: number
+  let targetIndex: number;
 
   switch (rule) {
-    case 'tuong_sinh':
+    case "tuong_sinh":
       // Theo chiều thuận của sequence
-      targetIndex = (knownIndex + distance + 6) % 6
-      break
+      targetIndex = (knownIndex + distance + 6) % 6;
+      break;
 
-    case 'phan_sinh':
+    case "phan_sinh":
       // Ngược chiều của sequence
-      targetIndex = (knownIndex - distance + 6) % 6
-      break
+      targetIndex = (knownIndex - distance + 6) % 6;
+      break;
 
-    case 'tuong_khac':
+    case "tuong_khac":
       // Tìm phần tử khắc với knownValue
       const pair = TUONG_KHAC_PAIRS.find(
-        ([a, b]) => a === knownValue || b === knownValue
-      )
+        ([a, b]) => a === knownValue || b === knownValue,
+      );
       if (pair) {
-        return pair[0] === knownValue ? pair[1] : pair[0]
+        return pair[0] === knownValue ? pair[1] : pair[0];
       }
       // Fallback to tuong_sinh if no khac pair
-      targetIndex = (knownIndex + distance + 6) % 6
-      break
+      targetIndex = (knownIndex + distance + 6) % 6;
+      break;
 
     default:
-      targetIndex = (knownIndex + distance + 6) % 6
+      targetIndex = (knownIndex + distance + 6) % 6;
   }
 
-  return sequence[targetIndex] as string
+  return sequence[targetIndex] as string;
 }
 
 /**
@@ -71,21 +71,21 @@ export function calculateAnswer(
  */
 export function getSequenceForTopic(topicType: string): readonly string[] {
   switch (topicType) {
-    case 'luc_hanh':
-      return LUC_HANH_SEQUENCE
-    case 'luc_khi_tinh':
-      return LUC_KHI_TINH_SEQUENCE
-    case 'luc_kinh_base':
-      return LUC_KINH_BASE_SEQUENCE
-    case 'luc_tang':
-      return LUC_TANG_SEQUENCE
-    case 'luc_phu':
-      return LUC_PHU_SEQUENCE
-    case 'kinh_am':
-      return KINH_AM_SEQUENCE
-    case 'kinh_duong':
-      return KINH_DUONG_SEQUENCE
+    case "luc_hanh":
+      return LUC_HANH_SEQUENCE;
+    case "luc_khi_tinh":
+      return LUC_KHI_TINH_SEQUENCE;
+    case "luc_kinh":
+      return LUC_KINH_BASE_SEQUENCE;
+    case "luc_tang":
+      return LUC_TANG_SEQUENCE;
+    case "luc_phu":
+      return LUC_PHU_SEQUENCE;
+    case "kinh_am":
+      return KINH_AM_SEQUENCE;
+    case "kinh_duong":
+      return KINH_DUONG_SEQUENCE;
     default:
-      return LUC_HANH_SEQUENCE
+      return LUC_HANH_SEQUENCE;
   }
 }
