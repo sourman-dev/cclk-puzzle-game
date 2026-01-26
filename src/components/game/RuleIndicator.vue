@@ -4,6 +4,7 @@ import { RULE_LABELS } from '@/data/knowledge/sequences'
 
 interface Props {
   rule: RuleType
+  label?: string
 }
 
 defineProps<Props>()
@@ -16,12 +17,10 @@ const ruleColors: Record<RuleType, string> = {
 </script>
 
 <template>
-  <div
-    :class="[
-      'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium',
-      ruleColors[rule]
-    ]"
-  >
-    {{ RULE_LABELS[rule] }}
+  <div :class="[
+    'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium',
+    ruleColors[rule]
+  ]">
+    {{ label || RULE_LABELS[rule] }}
   </div>
 </template>

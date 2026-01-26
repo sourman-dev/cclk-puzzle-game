@@ -8,6 +8,9 @@ import LevelStartDialog from '@/components/game/LevelStartDialog.vue'
 import ComprehensiveLevelDialog from '@/components/game/ComprehensiveLevelDialog.vue'
 import { getLevelById } from '@/data/levels'
 import type { Level, RuleType } from '@/types'
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
 
 const showSettings = ref(false)
 const showLevelDialog = ref(false)
@@ -26,6 +29,19 @@ const emit = defineEmits<{
 
 function handleSelectLevel(levelId: string) {
   selectedLevelId.value = levelId
+  const level = getLevelById(levelId)
+
+  // Skip dialog for Five Shu points levels as requested
+  if (
+    level?.topics.includes("ngu_du_tang") ||
+    level?.topics.includes("ngu_du_phu") ||
+    level?.topics.includes("ngu_du_ten_tang") ||
+    level?.topics.includes("ngu_du_ten_phu")
+  ) {
+    handleStartLevel(["tuong_sinh"], userStore.settings.roundsPerLevel);
+    return;
+  }
+
   showLevelDialog.value = true
 }
 
@@ -48,10 +64,7 @@ function handleStartComprehensive(levelIds: string[], rules: RuleType[], rounds:
 
 <template>
   <div class="min-h-screen flex flex-col bg-primary">
-    <AppHeader
-      @open-settings="showSettings = true"
-      @go-home="() => {}"
-    />
+    <AppHeader @open-settings="showSettings = true" @go-home="() => { }" />
 
     <main class="flex-1 flex flex-col items-center px-4 py-6">
       <h1 class="text-2xl font-bold mb-2">Châm Cứu Lục Khí</h1>
@@ -59,41 +72,25 @@ function handleStartComprehensive(levelIds: string[], rules: RuleType[], rounds:
         Học quy luật Tương Sinh - Phản Sinh - Tương Khắc
       </p>
 
-      <button
-        @click="emit('openLearning')"
-        class="mb-6 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg flex items-center gap-2"
-      >
+      <button @click="emit('openLearning')"
+        class="mb-6 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg flex items-center gap-2">
         📖 Học tập Lục Khí
       </button>
 
-      <LevelSelector
-        @select-level="handleSelectLevel"
-        @select-comprehensive="handleSelectComprehensive"
-      />
+      <LevelSelector @select-level="handleSelectLevel" @select-comprehensive="handleSelectComprehensive" />
     </main>
 
     <!-- Settings Modal -->
-    <BaseModal
-      :open="showSettings"
-      title="Cài đặt"
-      @close="showSettings = false"
-    >
+    <BaseModal :open="showSettings" title="Cài đặt" @close="showSettings = false">
       <SettingsView @close="showSettings = false" />
     </BaseModal>
 
     <!-- Level Start Dialog -->
-    <LevelStartDialog
-      :open="showLevelDialog"
-      :level="selectedLevel"
-      @close="showLevelDialog = false"
-      @start="handleStartLevel"
-    />
+    <LevelStartDialog :open="showLevelDialog" :level="selectedLevel" @close="showLevelDialog = false"
+      @start="handleStartLevel" />
 
     <!-- Comprehensive Level Dialog -->
-    <ComprehensiveLevelDialog
-      :open="showComprehensiveDialog"
-      @close="showComprehensiveDialog = false"
-      @start="handleStartComprehensive"
-    />
+    <ComprehensiveLevelDialog :open="showComprehensiveDialog" @close="showComprehensiveDialog = false"
+      @start="handleStartComprehensive" />
   </div>
 </template>

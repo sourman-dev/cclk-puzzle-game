@@ -187,17 +187,14 @@ function handlePlayAgain() {
     <!-- Header -->
     <header class="flex items-center justify-between px-4 py-3 pt-safe border-b border-color">
       <button @click="handleExit" class="text-xl">←</button>
-      <span class="font-semibold">{{ level?.title }}</span>
+      <span class="font-semibold">{{ currentQuestion?.titleOverride || level?.title }}</span>
       <ColorHintSwitch />
     </header>
 
     <main v-if="currentQuestion" class="flex-1 flex flex-col px-4 py-2 gap-2">
       <!-- Timer & Points & Progress -->
       <div class="flex items-center justify-between">
-        <GameTimer
-          :time-remaining="timer.timeRemaining.value"
-          :max-time="settings.initialTime"
-        />
+        <GameTimer :time-remaining="timer.timeRemaining.value" :max-time="settings.initialTime" />
         <div class="flex items-center gap-3">
           <span class="text-sm text-gray-500">{{ roundNumber }}/{{ rounds }}</span>
           <span class="text-xl font-bold text-primary">{{ totalPoints.toFixed(1) }}đ</span>
@@ -206,7 +203,7 @@ function handlePlayAgain() {
 
       <!-- Rule Indicator -->
       <div class="flex justify-center">
-        <RuleIndicator :rule="currentQuestion.rule" />
+        <RuleIndicator :rule="currentQuestion.rule" :label="currentQuestion.titleOverride" />
       </div>
 
       <!-- Cards -->
@@ -215,30 +212,17 @@ function handlePlayAgain() {
       </div>
 
       <!-- Answer Buttons -->
-      <AnswerButtons
-        :answers="currentQuestion.answers"
-        :correct-answer="currentQuestion.correctAnswer"
-        :selected-answer="selectedAnswer"
-        :disabled="showResult"
-        @select="handleAnswer"
-      />
+      <AnswerButtons :answers="currentQuestion.answers" :correct-answer="currentQuestion.correctAnswer"
+        :selected-answer="selectedAnswer" :disabled="showResult" @select="handleAnswer" />
 
       <!-- Hint Button -->
       <div class="flex justify-center pb-2">
-        <HintButton
-          :hints-used="hintsUsed"
-          :disabled="showResult"
-          @use-hint="handleHint"
-        />
+        <HintButton :hints-used="hintsUsed" :disabled="showResult" @use-hint="handleHint" />
       </div>
     </main>
 
     <!-- Level Complete Modal -->
-    <BaseModal
-      :open="showComplete"
-      title="Hoàn thành!"
-      @close="emit('exit')"
-    >
+    <BaseModal :open="showComplete" title="Hoàn thành!" @close="emit('exit')">
       <div class="text-center py-4">
         <p class="text-lg mb-2">Bạn đã hoàn thành {{ level?.title }}!</p>
         <p class="text-2xl font-bold mb-2">
@@ -248,10 +232,7 @@ function handlePlayAgain() {
           {{ totalPoints.toFixed(1) }}/{{ rounds }} điểm
         </p>
         <div class="flex justify-center">
-          <StarRating
-            :stars="calculateStarsFromPoints(totalPoints, rounds)"
-            size="lg"
-          />
+          <StarRating :stars="calculateStarsFromPoints(totalPoints, rounds)" size="lg" />
         </div>
       </div>
 

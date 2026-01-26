@@ -66,39 +66,36 @@ const revealedBgClass = computed(() => {
 </script>
 
 <template>
-  <div
-    :class="[
-      'relative w-full aspect-square rounded-xl transition-transform duration-500 transform-style-preserve-3d cursor-pointer',
-      card.isRevealed && 'rotate-y-180'
-    ]"
-  >
+  <div :class="[
+    'relative w-full aspect-square rounded-xl transition-transform duration-500 transform-style-preserve-3d cursor-pointer',
+    card.isRevealed && 'rotate-y-180'
+  ]">
     <!-- Front (hidden/úp) -->
-    <div
-      :class="[
-        'absolute inset-0 flex items-center justify-center rounded-xl backface-hidden',
-        !colorHintEnabled && 'bg-gradient-to-br from-gray-400 to-gray-600 dark:from-gray-600 dark:to-gray-800 text-white',
-        'border-2',
-        !colorHintEnabled && (card.isTarget ? 'border-yellow-400 ring-2 ring-yellow-400' : 'border-gray-500 dark:border-gray-500'),
-        colorHintEnabled && card.isTarget && 'ring-2 ring-yellow-400'
-      ]"
-      :style="hiddenColorHintStyle"
-    >
-      <span class="text-2xl font-bold">{{ card.position }}</span>
-      <span v-if="card.isTarget" class="absolute top-1 right-1 text-xl">❓</span>
+    <div :class="[
+      'absolute inset-0 flex items-center justify-center rounded-xl backface-hidden',
+      !colorHintEnabled && 'bg-gradient-to-br from-gray-400 to-gray-600 dark:from-gray-600 dark:to-gray-800 text-white',
+      'border-2',
+      !colorHintEnabled && (card.isTarget ? 'border-yellow-400 ring-2 ring-yellow-400' : 'border-gray-500 dark:border-gray-500'),
+      colorHintEnabled && card.isTarget && 'ring-2 ring-yellow-400'
+    ]" :style="hiddenColorHintStyle">
+      <span class="absolute top-1 left-1.5 text-[10px] font-bold opacity-70 uppercase tracking-wider">
+        {{ card.label || card.position }}
+      </span>
+      <span v-if="card.isTarget" class="text-3xl">❓</span>
+      <span v-else class="text-2xl font-bold opacity-20">{{ card.position }}</span>
     </div>
 
     <!-- Back (revealed/mở) -->
-    <div
-      :class="[
-        'absolute inset-0 flex flex-col items-center justify-center rounded-xl backface-hidden rotate-y-180',
-        'border-2',
-        !colorHintEnabled && 'text-white',
-        revealedBgClass
-      ]"
-      :style="elementColorStyle"
-    >
-      <span :class="['text-xs', colorHintEnabled ? 'opacity-70' : 'text-white/70']">{{ card.position }}</span>
-      <span :class="['font-bold mt-1 text-center px-1', textSizeClass]">{{ card.value }}</span>
+    <div :class="[
+      'absolute inset-0 flex flex-col items-center justify-center rounded-xl backface-hidden rotate-y-180',
+      'border-2',
+      !colorHintEnabled && 'text-white',
+      revealedBgClass
+    ]" :style="elementColorStyle">
+      <span class="absolute top-1 left-1.5 text-[10px] font-bold opacity-70 uppercase tracking-wider">
+        {{ card.label || card.position }}
+      </span>
+      <span :class="['font-bold text-center px-1', textSizeClass]">{{ card.value }}</span>
     </div>
   </div>
 </template>
@@ -107,9 +104,11 @@ const revealedBgClass = computed(() => {
 .transform-style-preserve-3d {
   transform-style: preserve-3d;
 }
+
 .backface-hidden {
   backface-visibility: hidden;
 }
+
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
