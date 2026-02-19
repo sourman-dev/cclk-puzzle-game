@@ -32,10 +32,18 @@ const availableChannels = computed(() => {
 
 const selectedChannels = ref<string[]>([])
 
+// Are channels locked by the level definition?
+const channelsLocked = computed(() => !!props.level?.defaultChannels?.length)
+
 // Initialize selectedChannels when level changes
 watch(() => props.level, (newLevel) => {
   if (newLevel) {
-    selectedChannels.value = availableChannels.value.map(tp => tp.id)
+    if (newLevel.defaultChannels?.length) {
+      // Use locked channels from level definition
+      selectedChannels.value = [...newLevel.defaultChannels]
+    } else {
+      selectedChannels.value = availableChannels.value.map(tp => tp.id)
+    }
   }
 }, { immediate: true })
 
@@ -115,7 +123,8 @@ function handleStart() {
           </label>
         </div>
 
-        <div>
+        <!-- Channel selection (hidden when locked by level) -->
+        <div v-if="!channelsLocked">
           <label class="block text-sm font-medium mb-2">Chọn Kinh lạc áp dụng</label>
           <div class="grid grid-cols-2 gap-2">
             <label v-for="channel in availableChannels" :key="channel.id"
@@ -131,6 +140,9 @@ function handleStart() {
           </div>
           <p v-if="selectedChannels.length === 0" class="text-[10px] text-red-500 mt-1 italic">Vui lòng chọn ít nhất 1
             kinh lạc để bắt đầu.</p>
+        </div>
+        <div v-else class="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
+          <p class="text-xs text-green-700 dark:text-green-300">🔒 Level này chỉ luyện kinh: <strong>{{ availableChannels.find(c => selectedChannels.includes(c.id))?.ten }}</strong></p>
         </div>
       </div>
     </div>

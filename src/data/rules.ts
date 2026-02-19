@@ -7,7 +7,6 @@ import {
   LUC_PHU_SEQUENCE,
   KINH_AM_SEQUENCE,
   KINH_DUONG_SEQUENCE,
-  TUONG_KHAC_PAIRS,
 } from "./knowledge/sequences";
 
 /**
@@ -21,15 +20,13 @@ import {
 export function calculateAnswer(
   sequence: readonly string[],
   knownPosition: number,
-  knownValue: string,
+  _knownValue: string,
   targetPosition: number,
   rule: RuleType,
 ): string {
-  // Tìm index của knownValue trong sequence
-  const knownIndex = sequence.indexOf(knownValue);
-  if (knownIndex === -1) {
-    throw new Error(`Value "${knownValue}" not found in sequence`);
-  }
+  // Dùng position trực tiếp (1-indexed → 0-indexed)
+  // Không dùng indexOf vì sequence có thể có giá trị trùng (ví dụ luc_kinh)
+  const knownIndex = knownPosition - 1;
 
   // Tính khoảng cách giữa 2 positions
   const distance = targetPosition - knownPosition;
@@ -48,15 +45,8 @@ export function calculateAnswer(
       break;
 
     case "tuong_khac":
-      // Tìm phần tử khắc với knownValue
-      const pair = TUONG_KHAC_PAIRS.find(
-        ([a, b]) => a === knownValue || b === knownValue,
-      );
-      if (pair) {
-        return pair[0] === knownValue ? pair[1] : pair[0];
-      }
-      // Fallback to tuong_sinh if no khac pair
-      targetIndex = (knownIndex + distance + 6) % 6;
+      // Tương Khắc = ±3 positions (đối nhau: 1↔4, 2↔5, 3↔6)
+      targetIndex = (knownIndex + 3) % 6;
       break;
 
     default:

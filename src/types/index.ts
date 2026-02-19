@@ -49,6 +49,7 @@ export interface Level {
   rules: RuleType[];
   unlocked: boolean;
   reviewFromLevels?: string[]; // previous levels for spaced repetition
+  defaultChannels?: string[]; // Pre-set channel filter (tpId), locks channel selection
 }
 
 // Extra options for starting a level

@@ -2,7 +2,6 @@
 import { ref, computed } from 'vue'
 import HexagramDiagram from '@/components/learning/HexagramDiagram.vue'
 import { ACUPOINTS_DATA } from '@/data/knowledge/acupoints'
-import { LUC_HANH } from '@/data/knowledge/luc-hanh'
 
 import { TANG_PHU_DATA } from '@/data/knowledge/luc-hanh'
 import { ACUPUNCTURE_SETS, type AcupunctureSystem } from '@/data/knowledge/acupuncture-sets'
@@ -54,11 +53,17 @@ const THEORY_BASICS = {
 const activeKinhId = ref<string | null>(null)
 const selectedAcupoint = ref<any>(null)
 
+// Derive 12 distinct meridian labels from TANG_PHU_DATA (BỘ-based pairings)
 const allKinhLabels = computed(() => {
-  return LUC_HANH.flatMap(h => [
-    { id: h.id, ten: h.ten, kinhName: h.tang, fullKinh: h.kinhAm, isTang: true },
-    { id: h.id, ten: h.ten, kinhName: h.phu, fullKinh: h.kinhDuong, isTang: false }
-  ])
+  // Tạng (6 Kinh Âm)
+  const tangLabels = TANG_PHU_DATA.filter(tp => tp.isTang).map(tp => ({
+    id: tp.id, ten: tp.ten, kinhName: tp.ten, fullKinh: tp.kinhAm, isTang: true
+  }))
+  // Phủ (6 Kinh Dương) — use kinhDuong from each Phủ entry
+  const phuLabels = TANG_PHU_DATA.filter(tp => !tp.isTang).map(tp => ({
+    id: tp.id, ten: tp.ten, kinhName: tp.ten, fullKinh: tp.kinhDuong, isTang: false
+  }))
+  return [...tangLabels, ...phuLabels]
 })
 
 function getAcupointsForKinh(kinhFull: string) {
@@ -66,17 +71,17 @@ function getAcupointsForKinh(kinhFull: string) {
   return tp ? ACUPOINTS_DATA[tp.id] || [] : []
 }
 
-// Master table data (position-based)
+// Master table data (position-based, HÀNH pairs from docs)
 const MASTER_TABLE = [
-  { pos: 1, hanh: 'Thổ', khi: 'Thấp', kinh: 'Thái Âm / Dương Minh', tang: 'Tỳ', phu: 'Đại Trường' },
-  { pos: 2, hanh: 'Kim', khi: 'Táo', kinh: 'Thái Âm / Dương Minh', tang: 'Phế', phu: 'Vị' },
-  { pos: 3, hanh: 'Thủy', khi: 'Hàn', kinh: 'Thiếu Âm / Thái Dương', tang: 'Thận', phu: 'Tiểu Trường' },
-  { pos: 4, hanh: 'Thử', khi: 'Thử', kinh: 'Thiếu Âm / Thái Dương', tang: 'Tâm', phu: 'Bàng Quang' },
-  { pos: 5, hanh: 'Mộc', khi: 'Phong', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Can', phu: 'Tam Tiêu' },
-  { pos: 6, hanh: 'Hỏa', khi: 'Hỏa', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Tâm Bào', phu: 'Đởm' }
+  { pos: 1, hanh: 'Thổ', khi: 'Thấp', kinh: 'Thái Âm / Dương Minh', tang: 'Tỳ', phu: 'Vị' },
+  { pos: 2, hanh: 'Kim', khi: 'Táo', kinh: 'Thái Âm / Dương Minh', tang: 'Phế', phu: 'Đại Trường' },
+  { pos: 3, hanh: 'Thủy', khi: 'Hàn', kinh: 'Thiếu Âm / Thái Dương', tang: 'Thận', phu: 'Bàng Quang' },
+  { pos: 4, hanh: 'Thử', khi: 'Thử', kinh: 'Thiếu Âm / Thái Dương', tang: 'Tâm', phu: 'Tiểu Trường' },
+  { pos: 5, hanh: 'Mộc', khi: 'Phong', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Can', phu: 'Đởm' },
+  { pos: 6, hanh: 'Hỏa', khi: 'Hỏa', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Tâm Bào', phu: 'Tam Tiêu' }
 ]
 
-// Biểu Lý pairs
+// Biểu Lý pairs (BỘ-based: Tạng ↔ Phủ cùng Bộ)
 const BIEU_LY = [
   { tang: 'Tỳ', phu: 'Đại Trường', bo: 1 },
   { tang: 'Phế', phu: 'Vị', bo: 2 },
@@ -86,7 +91,7 @@ const BIEU_LY = [
   { tang: 'Tâm Bào', phu: 'Đởm', bo: 6 }
 ]
 
-// 6 Bộ với Kinh Âm + Kinh Dương chi tiết
+// 6 Bộ với Kinh Âm + Kinh Dương chi tiết (BỘ-based pairings - dùng trên lâm sàng)
 const LUC_BO = [
   { bo: 1, hanh: 'Thổ', kinhAm: 'Túc Thái Âm Tỳ', kinhDuong: 'Thủ Dương Minh Đại Trường', viTriAm: 'túc', viTriDuong: 'thủ' },
   { bo: 2, hanh: 'Kim', kinhAm: 'Thủ Thái Âm Phế', kinhDuong: 'Túc Dương Minh Vị', viTriAm: 'thủ', viTriDuong: 'túc' },
@@ -412,8 +417,8 @@ const SYSTEM_OPTIONS: { value: AcupunctureSystem; label: string }[] = [
           <div v-for="tip in [
             { label: 'Lục Hành', text: 'Thổ Kim Thủy, Thử Mộc Hỏa' },
             { label: 'Lục Khí', text: 'Thấp Táo Hàn, Thử Phong Hỏa' },
-            { label: 'Lục Tạng', text: 'Tỳ Phế Thận, Bào Can Tâm' },
-            { label: 'Lục Phủ', text: 'Đại Vị Bàng, Tam Đởm Tiểu' },
+            { label: 'Lục Tạng', text: 'Tỳ Phế Thận, Tâm Can Bào' },
+            { label: 'Lục Phủ', text: 'Vị Đại Bàng, Tiểu Đởm Tam' },
             { label: 'Ngũ Du', text: 'Tĩnh Vinh Du (Nguyên) Kinh Hợp' }
           ]" :key="tip.label" class="p-3 bg-secondary rounded-xl border border-color">
             <p class="text-[10px] font-bold text-accent uppercase tracking-widest mb-1">{{ tip.label }}</p>

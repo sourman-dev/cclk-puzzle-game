@@ -449,7 +449,7 @@ export const ACUPOINTS_DATA: Record<string, Acupoint[]> = {
     },
     {
       ten: "Trung Phong",
-      loai: "Kủy",
+      loai: "Kinh",
       hanh: "Thủy",
       viTri:
         "Bờ dưới mắt cá trong khoảng 1 thốn, điểm lõm giữa cơ dài ngón cái và cơ chày trước.",
