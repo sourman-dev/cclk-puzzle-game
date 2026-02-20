@@ -66,9 +66,8 @@ const allKinhLabels = computed(() => {
   return [...tangLabels, ...phuLabels]
 })
 
-function getAcupointsForKinh(kinhFull: string) {
-  const tp = TANG_PHU_DATA.find((e: any) => e.kinhAm === kinhFull || e.kinhDuong === kinhFull)
-  return tp ? ACUPOINTS_DATA[tp.id] || [] : []
+function getAcupointsForKinh(id: string) {
+  return ACUPOINTS_DATA[id] || []
 }
 
 // Master table data (position-based, HÀNH pairs from docs)
@@ -287,7 +286,7 @@ const SYSTEM_OPTIONS: { value: AcupunctureSystem; label: string }[] = [
 
               <div v-if="activeKinhId === kinh.fullKinh"
                 class="p-2 bg-primary grid grid-cols-1 gap-1.5 border-t border-color">
-                <div v-for="acu in getAcupointsForKinh(kinh.fullKinh)" :key="acu.ten"
+                <div v-for="acu in getAcupointsForKinh(kinh.id)" :key="acu.ten"
                   class="p-2.5 bg-secondary/50 border border-color rounded-lg hover:border-accent cursor-pointer transition-all active:scale-[0.98]"
                   @click="selectedAcupoint = acu">
                   <div class="flex items-center justify-between mb-1">
