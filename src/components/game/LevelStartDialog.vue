@@ -21,7 +21,7 @@ const emit = defineEmits<{
 const selectedRule = ref<'tuong_sinh' | 'phan_sinh' | 'mix'>('tuong_sinh')
 const roundsCount = ref(10)
 const rotate = ref(true)
-const shuffle = ref(true)
+const shuffle = ref(false) // Default to false so cards are sequential 1->6 visually
 
 // Filter channels based on level topic
 const availableChannels = computed(() => {
@@ -59,8 +59,8 @@ function handleStart() {
   emit('start', {
     rules,
     rounds: roundsCount.value,
-    rotate: rotate.value,
-    shuffle: shuffle.value,
+    rotate: isNguDuLevel.value ? rotate.value : true, // Always rotate standard levels
+    shuffle: isNguDuLevel.value ? shuffle.value : false, // Never visually scramble standard levels
     allowedChannels: selectedChannels.value
   })
 }
