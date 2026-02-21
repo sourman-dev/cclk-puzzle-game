@@ -91,16 +91,8 @@ export const useUserStore = defineStore("user", () => {
     saveToStorage();
   }
 
-  function isLevelUnlocked(_levelId: string, levelOrder: number): boolean {
-    // Luôn mở khóa trong môi trường phát triển (DEV) để test
-    if (import.meta.env.DEV) return true;
-
-    if (levelOrder === 1) return true;
-    // Check if previous level completed
-    const prevLevelProgress = Object.values(userData.value.progress).find(
-      (p) => p.levelId === `level_${levelOrder - 1}`,
-    );
-    return prevLevelProgress?.completed ?? false;
+  function isLevelUnlocked(_levelId: string, _levelOrder: number): boolean {
+    return true; // All levels unlocked globally for exam preparation
   }
 
   return {
