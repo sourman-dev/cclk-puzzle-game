@@ -72,12 +72,12 @@ function getAcupointsForKinh(id: string) {
 
 // Master table data (position-based, HÀNH pairs from docs)
 const MASTER_TABLE = [
-  { pos: 1, hanh: 'Thổ', khi: 'Thấp', kinh: 'Thái Âm / Dương Minh', tang: 'Tỳ', phu: 'Vị' },
-  { pos: 2, hanh: 'Kim', khi: 'Táo', kinh: 'Thái Âm / Dương Minh', tang: 'Phế', phu: 'Đại Trường' },
-  { pos: 3, hanh: 'Thủy', khi: 'Hàn', kinh: 'Thiếu Âm / Thái Dương', tang: 'Thận', phu: 'Bàng Quang' },
-  { pos: 4, hanh: 'Thử', khi: 'Thử', kinh: 'Thiếu Âm / Thái Dương', tang: 'Tâm', phu: 'Tiểu Trường' },
-  { pos: 5, hanh: 'Mộc', khi: 'Phong', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Can', phu: 'Đởm' },
-  { pos: 6, hanh: 'Hỏa', khi: 'Hỏa', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Tâm Bào', phu: 'Tam Tiêu' }
+  { pos: 1, hanh: 'Thổ', khi: 'Thấp', kinh: 'Thái Âm / Dương Minh', tang: 'Tỳ', phu: 'Đại Trường' },
+  { pos: 2, hanh: 'Kim', khi: 'Táo', kinh: 'Thái Âm / Dương Minh', tang: 'Phế', phu: 'Vị' },
+  { pos: 3, hanh: 'Thủy', khi: 'Hàn', kinh: 'Thiếu Âm / Thái Dương', tang: 'Thận', phu: 'Tiểu Trường' },
+  { pos: 4, hanh: 'Thử', khi: 'Thử', kinh: 'Thiếu Âm / Thái Dương', tang: 'Tâm', phu: 'Bàng Quang' },
+  { pos: 5, hanh: 'Mộc', khi: 'Phong', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Can', phu: 'Tam Tiêu' },
+  { pos: 6, hanh: 'Hỏa', khi: 'Hỏa', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Tâm Bào', phu: 'Đởm' }
 ]
 
 // Biểu Lý pairs (BỘ-based: Tạng ↔ Phủ cùng Bộ)
