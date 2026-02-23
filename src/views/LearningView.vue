@@ -73,31 +73,31 @@ function getAcupointsForKinh(id: string) {
 // Master table data (position-based, HÀNH pairs from docs)
 const MASTER_TABLE = [
   { pos: 1, hanh: 'Thổ', khi: 'Thấp', kinh: 'Thái Âm / Dương Minh', tang: 'Tỳ', phu: 'Đại Trường' },
-  { pos: 2, hanh: 'Kim', khi: 'Táo', kinh: 'Thái Âm / Dương Minh', tang: 'Phế', phu: 'Vị' },
+  { pos: 2, hanh: 'Kim', khi: 'Táo', kinh: 'Thái Âm / Dương Minh', tang: 'Phế', phu: 'Bàng Quang' },
   { pos: 3, hanh: 'Thủy', khi: 'Hàn', kinh: 'Thiếu Âm / Thái Dương', tang: 'Thận', phu: 'Tiểu Trường' },
-  { pos: 4, hanh: 'Thử', khi: 'Thử', kinh: 'Thiếu Âm / Thái Dương', tang: 'Tâm', phu: 'Bàng Quang' },
+  { pos: 4, hanh: 'Thử', khi: 'Thử', kinh: 'Thiếu Âm / Thái Dương', tang: 'Tâm', phu: 'Đởm' },
   { pos: 5, hanh: 'Mộc', khi: 'Phong', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Can', phu: 'Tam Tiêu' },
-  { pos: 6, hanh: 'Hỏa', khi: 'Hỏa', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Tâm Bào', phu: 'Đởm' }
+  { pos: 6, hanh: 'Hỏa', khi: 'Hỏa', kinh: 'Quyết Âm / Thiếu Dương', tang: 'Tâm Bào', phu: 'Vị' }
 ]
 
 // Biểu Lý pairs (BỘ-based: Tạng ↔ Phủ cùng Bộ)
 const BIEU_LY = [
   { tang: 'Tỳ', phu: 'Đại Trường', bo: 1 },
-  { tang: 'Phế', phu: 'Vị', bo: 2 },
+  { tang: 'Phế', phu: 'Bàng Quang', bo: 2 },
   { tang: 'Thận', phu: 'Tiểu Trường', bo: 3 },
-  { tang: 'Tâm', phu: 'Bàng Quang', bo: 4 },
+  { tang: 'Tâm', phu: 'Đởm', bo: 4 },
   { tang: 'Can', phu: 'Tam Tiêu', bo: 5 },
-  { tang: 'Tâm Bào', phu: 'Đởm', bo: 6 }
+  { tang: 'Tâm Bào', phu: 'Vị', bo: 6 }
 ]
 
 // 6 Bộ với Kinh Âm + Kinh Dương chi tiết (BỘ-based pairings - dùng trên lâm sàng)
 const LUC_BO = [
   { bo: 1, hanh: 'Thổ', kinhAm: 'Túc Thái Âm Tỳ', kinhDuong: 'Thủ Dương Minh Đại Trường', viTriAm: 'túc', viTriDuong: 'thủ' },
-  { bo: 2, hanh: 'Kim', kinhAm: 'Thủ Thái Âm Phế', kinhDuong: 'Túc Dương Minh Vị', viTriAm: 'thủ', viTriDuong: 'túc' },
+  { bo: 2, hanh: 'Kim', kinhAm: 'Thủ Thái Âm Phế', kinhDuong: 'Túc Thái Dương Bàng Quang', viTriAm: 'thủ', viTriDuong: 'túc' },
   { bo: 3, hanh: 'Thủy', kinhAm: 'Túc Thiếu Âm Thận', kinhDuong: 'Thủ Thái Dương Tiểu Trường', viTriAm: 'túc', viTriDuong: 'thủ' },
-  { bo: 4, hanh: 'Thử', kinhAm: 'Thủ Thiếu Âm Tâm', kinhDuong: 'Túc Thái Dương Bàng Quang', viTriAm: 'thủ', viTriDuong: 'túc' },
+  { bo: 4, hanh: 'Thử', kinhAm: 'Thủ Thiếu Âm Tâm', kinhDuong: 'Túc Thiếu Dương Đởm', viTriAm: 'thủ', viTriDuong: 'túc' },
   { bo: 5, hanh: 'Mộc', kinhAm: 'Túc Quyết Âm Can', kinhDuong: 'Thủ Thiếu Dương Tam Tiêu', viTriAm: 'túc', viTriDuong: 'thủ' },
-  { bo: 6, hanh: 'Hỏa', kinhAm: 'Thủ Quyết Âm Tâm Bào', kinhDuong: 'Túc Thiếu Dương Đởm', viTriAm: 'thủ', viTriDuong: 'túc' },
+  { bo: 6, hanh: 'Hỏa', kinhAm: 'Thủ Quyết Âm Tâm Bào', kinhDuong: 'Túc Dương Minh Vị', viTriAm: 'thủ', viTriDuong: 'túc' },
 ]
 
 const selectedSystem = ref<AcupunctureSystem>('thu_cham')

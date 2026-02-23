@@ -174,10 +174,10 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     ten: "Vị",
     isTang: false,
     hanhId: "THO", // Hành Thổ
-    boId: "KIM", // Bộ Kim
+    boId: "HOA", // Bộ Hỏa
     mauSac: "#ac8308ff",
-    mauChu: "#000000",
-    kinhAm: "Thủ Thái Âm Phế",
+    mauChu: "#ffffff",
+    kinhAm: "Thủ Quyết Âm Tâm Bào",
     kinhDuong: "Túc Dương Minh Vị",
   },
   {
@@ -196,10 +196,10 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     ten: "Bàng Quang",
     isTang: false,
     hanhId: "THUY", // Hành Thủy
-    boId: "THU", // Bộ Thử
+    boId: "KIM", // Bộ Kim
     mauSac: "#000000",
     mauChu: "#ffffff",
-    kinhAm: "Thủ Thiếu Âm Tâm",
+    kinhAm: "Thủ Thái Âm Phế",
     kinhDuong: "Túc Thái Dương Bàng Quang",
   },
   {
@@ -218,10 +218,10 @@ export const TANG_PHU_DATA: TANGPHUElement[] = [
     ten: "Đởm",
     isTang: false,
     hanhId: "MOC", // Hành Mộc
-    boId: "HOA", // Bộ Hỏa
+    boId: "THU", // Bộ Thử
     mauSac: "#00b797",
     mauChu: "#ffffff",
-    kinhAm: "Thủ Quyết Âm Tâm Bào",
+    kinhAm: "Thủ Thiếu Âm Tâm",
     kinhDuong: "Túc Thiếu Dương Đởm",
   },
 ];
@@ -251,9 +251,9 @@ export const LUC_HANH: LucHanhElement[] = [
     khi: "Táo",
     kinh: "Thái Âm / Dương Minh",
     tang: "Phế",
-    phu: "Vị",
+    phu: "Bàng Quang",
     kinhAm: "Thủ Thái Âm Phế",
-    kinhDuong: "Túc Dương Minh Vị",
+    kinhDuong: "Túc Thái Dương Bàng Quang",
   },
   {
     id: "THUY",
@@ -279,9 +279,9 @@ export const LUC_HANH: LucHanhElement[] = [
     khi: "Thử",
     kinh: "Thiếu Âm / Thái Dương",
     tang: "Tâm",
-    phu: "Bàng Quang",
+    phu: "Đởm",
     kinhAm: "Thủ Thiếu Âm Tâm",
-    kinhDuong: "Túc Thái Dương Bàng Quang",
+    kinhDuong: "Túc Thiếu Dương Đởm",
   },
   {
     id: "MOC",
@@ -307,9 +307,9 @@ export const LUC_HANH: LucHanhElement[] = [
     khi: "Hỏa",
     kinh: "Quyết Âm / Thiếu Dương",
     tang: "Tâm Bào Lạc",
-    phu: "Đởm",
+    phu: "Vị",
     kinhAm: "Thủ Quyết Âm Tâm Bào",
-    kinhDuong: "Túc Thiếu Dương Đởm",
+    kinhDuong: "Túc Dương Minh Vị",
   },
 ];
 
