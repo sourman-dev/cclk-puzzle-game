@@ -2,7 +2,6 @@ import type { RuleType } from "@/types";
 import {
   LUC_HANH_SEQUENCE,
   LUC_KHI_TINH_SEQUENCE,
-  LUC_KINH_BASE_SEQUENCE,
   LUC_TANG_SEQUENCE,
   LUC_PHU_SEQUENCE,
   KINH_AM_SEQUENCE,
@@ -65,8 +64,6 @@ export function getSequenceForTopic(topicType: string): readonly string[] {
       return LUC_HANH_SEQUENCE;
     case "luc_khi_tinh":
       return LUC_KHI_TINH_SEQUENCE;
-    case "luc_kinh":
-      return LUC_KINH_BASE_SEQUENCE;
     case "luc_tang":
       return LUC_TANG_SEQUENCE;
     case "luc_phu":

@@ -15,9 +15,8 @@ export const LEVELS: Level[] = [
     id: "level_2",
     order: 2,
     title: "Lục Khí",
-    description:
-      "Lục Khí tính chất (Thấp, Táo, Hàn...) và Lục Kinh cơ bản (Thái Âm, Dương Minh...)",
-    topics: ["luc_khi_tinh", "luc_kinh"],
+    description: "Lục Khí tính chất (Thấp, Táo, Hàn...)",
+    topics: ["luc_khi_tinh"],
     rules: ["tuong_sinh", "phan_sinh"],
     unlocked: true,
     reviewFromLevels: ["level_1"],
@@ -278,7 +277,6 @@ export const COMPREHENSIVE_LEVEL: Level = {
   topics: [
     "luc_hanh",
     "luc_khi_tinh",
-    "luc_kinh",
     "luc_tang",
     "luc_phu",
     "kinh_am",

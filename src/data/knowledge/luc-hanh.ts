@@ -372,7 +372,6 @@ export function getSequence(field: keyof LucHanhElement): string[] {
 // Pre-generated sequences for performance (all derived from LUC_HANH)
 export const LUC_HANH_SEQUENCE = getSequence("ten") as readonly string[];
 export const LUC_KHI_TINH_SEQUENCE = getSequence("khi") as readonly string[];
-export const LUC_KINH_BASE_SEQUENCE = getSequence("kinh") as readonly string[];
 export const LUC_TANG_SEQUENCE = getSequence("tang") as readonly string[];
 export const LUC_PHU_SEQUENCE = getSequence("phu") as readonly string[];
 
