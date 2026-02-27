@@ -93,7 +93,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_tang"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_7"],
     defaultChannels: ["TY"],
   },
   {
@@ -104,7 +103,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_tang"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_9a"],
     defaultChannels: ["PHE"],
   },
   {
@@ -115,7 +113,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_tang"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_9b"],
     defaultChannels: ["THAN"],
   },
   {
@@ -126,7 +123,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_tang"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_9c"],
     defaultChannels: ["TAM"],
   },
   {
@@ -137,7 +133,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_tang"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_9d"],
     defaultChannels: ["CAN"],
   },
   {
@@ -148,7 +143,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_tang"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_9e"],
     defaultChannels: ["TBL"],
   },
 
@@ -161,7 +155,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_phu"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_8", "level_9f"],
     defaultChannels: ["DAI_TRUONG"],
   },
   {
@@ -172,7 +165,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_phu"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_10a"],
     defaultChannels: ["VI"],
   },
   {
@@ -183,7 +175,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_phu"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_10b"],
     defaultChannels: ["TIEU_TRUONG"],
   },
   {
@@ -194,7 +185,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_phu"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_10c"],
     defaultChannels: ["BANG_QUANG"],
   },
   {
@@ -205,7 +195,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_phu"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_10d"],
     defaultChannels: ["TAM_TIEU"],
   },
   {
@@ -216,7 +205,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_phu"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_10e"],
     defaultChannels: ["DOM"],
   },
 
@@ -229,7 +217,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_tang"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_9f"],
   },
   {
     id: "level_22",
@@ -240,7 +227,6 @@ export const LEVELS: Level[] = [
     topics: ["ngu_du_ten_phu"],
     rules: ["tuong_sinh"],
     unlocked: true,
-    reviewFromLevels: ["level_10f", "level_21"],
   },
 
   // === Bộ Huyệt ===
