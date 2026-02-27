@@ -442,7 +442,20 @@ export function useGameLogic() {
         const reviewLevelId = pickRandom(level.reviewFromLevels, 1)[0];
         const reviewLevel = LEVELS.find((l) => l.id === reviewLevelId);
         if (reviewLevel) {
-          questions.push(generateQuestion(reviewLevel, settings, options));
+          const reviewOptions = options ? { ...options } : undefined;
+          if (reviewOptions) {
+            if (
+              reviewLevel.defaultChannels &&
+              reviewLevel.defaultChannels.length > 0
+            ) {
+              reviewOptions.allowedChannels = [...reviewLevel.defaultChannels];
+            } else {
+              delete reviewOptions.allowedChannels;
+            }
+          }
+          questions.push(
+            generateQuestion(reviewLevel, settings, reviewOptions),
+          );
         }
       }
     }
